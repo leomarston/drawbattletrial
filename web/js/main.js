@@ -28,11 +28,12 @@ const BOTS = [
 
 // ---------- DOM refs ----------
 const $ = (id) => document.getElementById(id);
-const views = { lobby: $('view-lobby'), game: $('view-game'), results: $('view-results') };
+const views = { lobby: $('view-lobby'), setup: $('view-setup'), game: $('view-game'), results: $('view-results') };
 const ovChoose = $('overlay-choose'), ovReveal = $('overlay-reveal');
 
 let engine, bots, canvas;
 let lastTime = 0, turnKey = null, gameReady = false;
+let menuScreen = 'home'; // 'home' | 'setup' — which screen to show while not in a game
 const cache = {}; // render signatures
 
 // ---------- assets ----------
@@ -74,6 +75,7 @@ const SWATCHES = [
 // ---------- bootstrap ----------
 function init() {
   $('lobbyLogo').innerHTML = LOGO_SVG;
+  $('setupLogo').innerHTML = LOGO_SVG;
   $('gameLogo').innerHTML = LOGO_SVG;
 
   profile = loadProfile();
@@ -200,11 +202,22 @@ function wireControls() {
 
 // ---------- menu wiring ----------
 function wireMenu() {
-  $('btnSettings').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
-  $('btnLang').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
-  $('btnHowto').addEventListener('click', () => { sfx.click(); openModal('howto'); });
-  $('btnSound').addEventListener('click', () => {
-    settings.sfx = !settings.sfx; saveSettings(settings); applySettings(); if (settings.sfx) sfx.click();
+  // main menu
+  $('menuPlay').addEventListener('click', () => { sfx.click(); menuScreen = 'setup'; showView('setup'); });
+  $('menuHowto').addEventListener('click', () => { sfx.click(); openModal('howto'); });
+  $('menuSettings').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
+  $('menuQuit').addEventListener('click', () => { sfx.click(); openModal('quit'); });
+
+  // setup screen
+  $('setupBack').addEventListener('click', () => { sfx.click(); menuScreen = 'home'; showView('lobby'); });
+
+  // quit → attempt to close the tab (works only for script-opened windows),
+  // then always show a friendly goodbye so it's never a dead end.
+  $('quitYes').addEventListener('click', () => {
+    sfx.click();
+    $('modal-quit').hidden = true;
+    try { window.close(); } catch { /* ignore */ }
+    $('modal-goodbye').hidden = false;
   });
 
   // close modals (close button or backdrop click)
@@ -241,7 +254,7 @@ function wireMenu() {
   });
 
   // results → back to menu
-  $('menuBtn').addEventListener('click', () => { sfx.click(); engine.dispatch({ type: 'RESET' }); });
+  $('menuBtn').addEventListener('click', () => { sfx.click(); menuScreen = 'home'; engine.dispatch({ type: 'RESET' }); });
 }
 
 function setActiveTool(tool) {
@@ -308,7 +321,7 @@ function showView(name) {
 // ---------- render ----------
 function render(s) {
   // top-level view
-  if (s.phase === Phase.LOBBY) { showView('lobby'); return; }
+  if (s.phase === Phase.LOBBY) { showView(menuScreen === 'setup' ? 'setup' : 'lobby'); return; }
   if (s.phase === Phase.GAME_END) { showView('results'); renderResults(s); ovChoose.hidden = ovReveal.hidden = true; return; }
   showView('game');
 

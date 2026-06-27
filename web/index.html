@@ -12,25 +12,27 @@
 <body>
 <main class="stage" id="stage">
 
-  <!-- ===================================================== HOME -->
+  <!-- ===================================================== HOME / MAIN MENU -->
   <section class="view view-home" id="view-lobby">
-    <div class="home-topbar">
-      <button class="iconbtn" id="btnSound" title="Sound">
-        <svg viewBox="0 0 28 28"><path d="M7 11 H11 L16 7 V21 L11 17 H7 Z" fill="#fff"/><path id="soundWaves" d="M19 10 q3 4 0 8 M22 7 q6 7 0 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
-      </button>
-      <button class="iconbtn" id="btnLang" title="Language">
-        <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M5 14 H23 M14 5 q5 9 0 18 M14 5 q-5 9 0 18" fill="none" stroke="#fff" stroke-width="2.2"/></svg>
-      </button>
-      <button class="iconbtn" id="btnHowto" title="How to play"><span class="iq">?</span></button>
-      <button class="iconbtn" id="btnSettings" title="Settings">
-        <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="3.4" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M14 4 v3 M14 21 v3 M4 14 h3 M21 14 h3 M7 7 l2 2 M19 19 l2 2 M21 7 l-2 2 M9 19 l-2 2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
-      </button>
+    <div class="menu-inner">
+      <div class="logo menu-logo" id="lobbyLogo"></div>
+      <div class="menu-btns">
+        <button class="btn menu-btn is-play" id="menuPlay">PLAY</button>
+        <button class="btn menu-btn is-2nd" id="menuHowto">HOW TO PLAY</button>
+        <button class="btn menu-btn is-2nd" id="menuSettings">SETTINGS</button>
+        <button class="btn menu-btn is-quit" id="menuQuit">QUIT</button>
+      </div>
+      <div class="menu-note">Local match vs. 3 friendly bots · no server needed</div>
     </div>
+  </section>
 
+  <!-- ===================================================== SETUP -->
+  <section class="view view-setup" id="view-setup" hidden>
     <div class="home-main">
-      <div class="logo home-logo" id="lobbyLogo"></div>
+      <div class="logo home-logo" id="setupLogo"></div>
 
       <div class="home-card panel">
+        <div class="setup-title">Game Setup</div>
         <div class="home-profile">
           <span class="home-av" id="homeAvatar"></span>
           <input id="nameInput" class="text-field name-field" maxlength="14" value="You" autocomplete="off" placeholder="Your name"/>
@@ -52,8 +54,10 @@
           </div>
         </div>
 
-        <button class="btn btn-cta" id="startBtn">PLAY</button>
-        <div class="lobby-note">Local match vs. 3 friendly bots · no server needed</div>
+        <div class="setup-actions">
+          <button class="btn btn-ghost" id="setupBack">Back</button>
+          <button class="btn btn-cta" id="startBtn">START</button>
+        </div>
       </div>
 
       <div class="modes-rail" id="modesRail"></div>
@@ -238,6 +242,27 @@
         <div class="howto-step"><span class="hs-num">4</span><div><b>Score points</b><p>Guess fast for more points. The drawer scores too. Highest wins!</p></div></div>
       </div>
       <button class="btn btn-done" data-close>Got it!</button>
+    </div>
+  </div>
+
+  <!-- ===================================================== MODAL: QUIT -->
+  <div class="modal" id="modal-quit" hidden>
+    <div class="modal-card panel sm-card">
+      <div class="modal-title center">Leave DrawBattle?</div>
+      <div class="quit-actions">
+        <button class="btn btn-ghost" data-close>Cancel</button>
+        <button class="btn btn-danger" id="quitYes">Quit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================== MODAL: GOODBYE -->
+  <div class="modal" id="modal-goodbye" hidden>
+    <div class="modal-card panel sm-card center-card">
+      <div class="goodbye-emoji">👋</div>
+      <div class="modal-title center">Thanks for playing!</div>
+      <div class="overlay-sub">You can close this tab — or jump right back in.</div>
+      <button class="btn btn-cta" data-close>Back to DrawBattle</button>
     </div>
   </div>
 

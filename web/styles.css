@@ -411,3 +411,37 @@ select.text-field{cursor:pointer;}
 
 /* reduced motion */
 body.no-motion *{transition:none !important; animation:none !important;}
+
+/* ===================== MAIN MENU ===================== */
+.menu-inner{display:flex; flex-direction:column; align-items:center; gap:30px;}
+.menu-logo svg{height:130px; display:block;}
+.menu-btns{display:flex; flex-direction:column; gap:14px; width:360px;}
+.menu-btn{width:100%; height:62px; font-size:23px; letter-spacing:.5px;}
+.menu-btn.is-play{background:var(--coral); box-shadow:0 6px 0 var(--coral-sh);}
+.menu-btn.is-play:hover{box-shadow:0 9px 0 var(--coral-sh);}
+.menu-btn.is-play:active{box-shadow:0 2px 0 var(--coral-sh);}
+.menu-btn.is-2nd{background:var(--violet); box-shadow:0 6px 0 var(--violet-sh);}
+.menu-btn.is-2nd:hover{box-shadow:0 9px 0 var(--violet-sh);}
+.menu-btn.is-2nd:active{box-shadow:0 2px 0 var(--violet-sh);}
+.menu-btn.is-quit{background:var(--panel-2); box-shadow:0 6px 0 var(--panel-sh);}
+.menu-btn.is-quit:hover{box-shadow:0 9px 0 var(--panel-sh);}
+.menu-btn.is-quit:active{box-shadow:0 2px 0 var(--panel-sh);}
+.menu-note{color:#7C77A8; font-weight:700; font-size:13px;}
+
+/* ===================== SETUP screen ===================== */
+.view-setup{display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#201a4a,#15112e);}
+.setup-title{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:22px; text-align:center; margin-bottom:-2px;}
+.setup-actions{display:flex; gap:12px;}
+.setup-actions .btn-ghost{flex:0 0 auto; padding:0 24px;}
+.setup-actions .btn-cta{flex:1;}
+
+/* ===================== QUIT / GOODBYE ===================== */
+.sm-card{width:380px;}
+.center{text-align:center;}
+.center-card{align-items:center; text-align:center;}
+.quit-actions{display:flex; gap:12px;}
+.quit-actions .btn{flex:1; height:52px; font-size:18px;}
+.btn-danger{background:var(--coral); box-shadow:0 6px 0 var(--coral-sh);}
+.btn-danger:hover{box-shadow:0 9px 0 var(--coral-sh);}
+.btn-danger:active{box-shadow:0 2px 0 var(--coral-sh);}
+.goodbye-emoji{font-size:54px; line-height:1;}
