@@ -61,7 +61,12 @@
   <!-- ===================================================== GAME -->
   <section class="view view-game" id="view-game" hidden>
     <header class="topbar">
-      <div class="logo" id="gameLogo"></div>
+      <div class="topbar-left">
+        <button class="iconbtn" id="pauseBtn" title="Menu">
+          <svg viewBox="0 0 28 28"><path d="M6 9 H22 M6 14 H22 M6 19 H22" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="logo" id="gameLogo"></div>
+      </div>
 
       <div class="wordbanner panel">
         <div class="chip-cat"><div class="k">CATEGORY</div><div class="v" id="wordCategory">—</div></div>
@@ -238,6 +243,18 @@
       <div class="quit-actions">
         <button class="btn btn-ghost" data-close>Cancel</button>
         <button class="btn btn-danger" id="quitYes">Quit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================== MODAL: IN-GAME PAUSE -->
+  <div class="modal" id="modal-pause" hidden>
+    <div class="modal-card panel sm-card center-card">
+      <div class="modal-title center">Paused</div>
+      <div class="pause-btns">
+        <button class="btn menu-btn is-play" id="pauseContinue">Continue</button>
+        <button class="btn menu-btn is-2nd" id="pauseSettings">Settings</button>
+        <button class="btn menu-btn is-quit" id="pauseMenu">Return to Menu</button>
       </div>
     </div>
   </div>

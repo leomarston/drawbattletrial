@@ -34,6 +34,7 @@ const ovChoose = $('overlay-choose'), ovReveal = $('overlay-reveal');
 let engine, bots, canvas;
 let lastTime = 0, turnKey = null, gameReady = false;
 let menuScreen = 'home'; // 'home' | 'setup' — which screen to show while not in a game
+let paused = false;      // in-game pause menu open
 const cache = {}; // render signatures
 
 // ---------- assets ----------
@@ -200,8 +201,20 @@ function wireMenu() {
   // close modals (close button or backdrop click)
   document.querySelectorAll('.modal').forEach(m => {
     m.addEventListener('click', (e) => {
-      if (e.target === m || e.target.closest('[data-close]')) { m.hidden = true; sfx.click(); }
+      if (e.target === m || e.target.closest('[data-close]')) {
+        m.hidden = true; sfx.click();
+        if (m.id === 'modal-pause') paused = false; // backdrop on pause = continue
+      }
     });
+  });
+
+  // in-game pause menu
+  $('pauseBtn').addEventListener('click', () => { sfx.click(); paused = true; openModal('pause'); });
+  $('pauseContinue').addEventListener('click', () => { sfx.click(); paused = false; $('modal-pause').hidden = true; });
+  $('pauseSettings').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
+  $('pauseMenu').addEventListener('click', () => {
+    sfx.click(); paused = false; $('modal-pause').hidden = true;
+    menuScreen = 'home'; music.scene('menu'); engine.dispatch({ type: 'RESET' });
   });
 
   // settings controls
@@ -269,7 +282,7 @@ function loop(now) {
   lastTime = now;
   if (engine) {
     const s = engine.getState();
-    if ([Phase.CHOOSING, Phase.DRAWING, Phase.REVEAL].includes(s.phase)) {
+    if (!paused && [Phase.CHOOSING, Phase.DRAWING, Phase.REVEAL].includes(s.phase)) {
       bots.update();
       engine.dispatch({ type: 'TICK', dt });
     }

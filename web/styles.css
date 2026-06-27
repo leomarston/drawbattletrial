@@ -424,3 +424,9 @@ body.no-motion *{transition:none !important; animation:none !important;}
 .btn-danger:hover{box-shadow:0 9px 0 var(--coral-sh);}
 .btn-danger:active{box-shadow:0 2px 0 var(--coral-sh);}
 .goodbye-emoji{font-size:54px; line-height:1;}
+
+/* ===================== IN-GAME PAUSE MENU ===================== */
+.topbar-left{display:flex; align-items:center; gap:14px;}
+#modal-pause{z-index:35;} /* below the settings modal (40) so Settings opens on top */
+.pause-btns{display:flex; flex-direction:column; gap:12px; width:300px; max-width:100%;}
+.pause-btns .menu-btn{height:56px; font-size:20px;}
