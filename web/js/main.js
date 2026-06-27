@@ -93,7 +93,6 @@ function init() {
   $('catSel').value = settings.category || 'all';
   segSet('segRounds', settings.rounds);
   segSet('segTime', settings.drawTime);
-  renderModes();
 
   // in-game color swatches
   $('swatchGrid').innerHTML = SWATCHES
@@ -107,23 +106,6 @@ function init() {
 }
 
 // ---------- home / menu helpers ----------
-const MODES = [
-  { key: 'classic', name: 'Classic', desc: 'Draw & guess, score for speed', live: true,
-    ico: `<svg viewBox="0 0 46 46"><g transform="translate(23,23) rotate(45)"><rect x="-5" y="-17" width="10" height="20" rx="4" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/><path d="M-6 3 L6 3 L3 15 Q0 19 -3 15 Z" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/></g></svg>` },
-  { key: 'blitz', name: 'Blitz', desc: 'Short rounds, double points', live: false,
-    ico: `<svg viewBox="0 0 46 46"><path d="M26 6 L14 26 H22 L20 40 L33 19 H25 Z" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/></svg>` },
-  { key: 'teams', name: 'Teams', desc: 'Guess together, win together', live: false,
-    ico: `<svg viewBox="0 0 46 46"><rect x="6" y="14" width="18" height="18" rx="6" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5"/><rect x="22" y="14" width="18" height="18" rx="6" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/></svg>` },
-];
-function renderModes() {
-  $('modesRail').innerHTML = MODES.map(m => `
-    <div class="mode-card ${m.live ? '' : 'soon'}" data-mode="${m.key}" data-live="${m.live}">
-      <span class="mode-badge ${m.live ? 'live' : 'soon'}">${m.live ? 'LIVE' : 'SOON'}</span>
-      <span class="mc-ico">${m.ico}</span>
-      <span class="mc-name">${m.name}</span>
-      <span class="mc-desc">${m.desc}</span>
-    </div>`).join('');
-}
 function renderHomeAvatar() { $('homeAvatar').innerHTML = avatarSVG(profile.color, profile.mood); }
 
 function segSet(id, val) {
@@ -244,12 +226,6 @@ function wireMenu() {
   $('nameInput').addEventListener('change', () => {
     profile.name = ($('nameInput').value.trim() || 'You').slice(0, 14);
     saveProfile(profile); renderHomeAvatar();
-  });
-
-  // mode cards (live → play)
-  $('modesRail').addEventListener('click', (e) => {
-    const card = e.target.closest('.mode-card'); if (!card) return;
-    if (card.dataset.live === 'true') startGame();
   });
 
   // results → back to menu

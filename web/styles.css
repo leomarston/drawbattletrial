@@ -356,23 +356,6 @@ select.text-field{cursor:pointer;}
 }
 .seg button.on{background:var(--teal); color:var(--ink); box-shadow:0 2px 0 var(--teal-sh);}
 
-/* modes rail */
-.modes-rail{display:flex; gap:14px;}
-.mode-card{
-  width:150px; padding:16px; background:var(--panel); border:3px solid var(--ink); border-radius:18px;
-  box-shadow:0 6px 0 var(--panel-sh); display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; cursor:pointer;
-  transition:transform .06s, box-shadow .06s;
-}
-.mode-card:hover{transform:translateY(-2px); box-shadow:0 8px 0 var(--panel-sh);}
-.mode-card.soon{opacity:.6; cursor:default;}
-.mode-card.soon:hover{transform:none; box-shadow:0 6px 0 var(--panel-sh);}
-.mode-card .mc-ico{width:46px; height:46px;}
-.mode-card .mc-name{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:17px;}
-.mode-card .mc-desc{font-size:11.5px; color:#A8A3D6; text-align:center; line-height:1.25; font-weight:700;}
-.mode-badge{position:absolute; top:-9px; right:-8px; font-family:'Nunito',system-ui,sans-serif; font-weight:800; font-size:10px; letter-spacing:1px; padding:3px 8px; border-radius:999px; border:2.5px solid var(--ink);}
-.mode-badge.live{background:var(--lime); color:var(--ink);}
-.mode-badge.soon{background:var(--amber); color:var(--ink);}
-
 .btn-ghost{height:50px; padding:0 26px; background:var(--panel-2); box-shadow:0 6px 0 var(--panel-sh); font-size:18px;}
 .btn-ghost:hover{box-shadow:0 9px 0 var(--panel-sh);}
 .btn-ghost:active{box-shadow:0 2px 0 var(--panel-sh);}
