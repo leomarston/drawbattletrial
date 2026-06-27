@@ -19,7 +19,7 @@ let profile, settings;
 
 // ---------- players (you + 3 local bots) ----------
 const HUMAN_ID = 'you';
-const HUMAN = { id: HUMAN_ID, name: 'You', color: '#38BDF8', mood: 'grin', isBot: false };
+const HUMAN = { id: HUMAN_ID, name: 'Player 1', color: '#38BDF8', mood: 'grin', isBot: false };
 const BOTS = [
   { id: 'b_maya', name: 'Maya', color: '#2DD4BF', mood: 'smile', isBot: true },
   { id: 'b_leo',  name: 'Leo',  color: '#FB5E7E', mood: 'smile', isBot: true },
@@ -87,8 +87,7 @@ function init() {
   window.addEventListener('pointerdown', () => music.apply(), { once: true });
 
   // home: profile + quick options
-  $('nameInput').value = profile.name;
-  HUMAN.name = profile.name; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
+  HUMAN.name = 'Player 1'; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
   renderHomeAvatar();
   $('catSel').innerHTML = `<option value="all">All categories</option>` +
     CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
@@ -222,10 +221,6 @@ function wireMenu() {
     });
   });
   $('catSel').addEventListener('change', () => sfx.click());
-  $('nameInput').addEventListener('change', () => {
-    profile.name = ($('nameInput').value.trim() || 'You').slice(0, 14);
-    saveProfile(profile); renderHomeAvatar();
-  });
 
   // results → back to menu
   $('menuBtn').addEventListener('click', () => { sfx.click(); menuScreen = 'home'; music.scene('menu'); engine.dispatch({ type: 'RESET' }); });
@@ -246,12 +241,10 @@ function startGame() {
   const rounds = segGet('segRounds') || 3;
   const drawTime = segGet('segTime') || 75;
   const category = $('catSel').value;
-  const name = ($('nameInput').value.trim() || 'You').slice(0, 14);
 
   // persist choices
-  profile.name = name; saveProfile(profile);
   Object.assign(settings, { rounds, drawTime, category }); saveSettings(settings);
-  HUMAN.name = name; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
+  HUMAN.name = 'Player 1'; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
 
   engine = createEngine({ rounds, drawTime, categories: category === 'all' ? null : [category] });
   bots = createBots(engine, HUMAN_ID);

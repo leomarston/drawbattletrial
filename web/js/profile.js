@@ -4,7 +4,7 @@
 const PKEY = 'db_profile';
 const SKEY = 'db_settings';
 
-export const DEFAULT_PROFILE = { name: 'You', color: '#38BDF8', mood: 'grin' };
+export const DEFAULT_PROFILE = { name: 'Player 1', color: '#38BDF8', mood: 'grin' };
 export const DEFAULT_SETTINGS = {
   sfx: true,
   sfxVol: 0.6,
