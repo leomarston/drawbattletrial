@@ -86,9 +86,8 @@ function init() {
   // browsers block autoplay until a gesture — start the current track on first interaction
   window.addEventListener('pointerdown', () => music.apply(), { once: true });
 
-  // home: profile + quick options
+  // human player (fixed name) + quick options
   HUMAN.name = 'Player 1'; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
-  renderHomeAvatar();
   $('catSel').innerHTML = `<option value="all">All categories</option>` +
     CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
   $('catSel').value = settings.category || 'all';
@@ -107,8 +106,6 @@ function init() {
 }
 
 // ---------- home / menu helpers ----------
-function renderHomeAvatar() { $('homeAvatar').innerHTML = avatarSVG(profile.color, profile.mood); }
-
 function segSet(id, val) {
   [...$(id).children].forEach(b => b.classList.toggle('on', b.dataset.val == val));
 }
