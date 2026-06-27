@@ -35,20 +35,36 @@ function note(freq, dur, { type = 'sine', vol = 0.25, t0 = 0, glideTo = null } =
   osc.stop(start + dur + 0.02);
 }
 
-// ---- looping background music (HTMLAudioElement) ----
-let musicEl = null;
-export function initMusic(src) {
-  musicEl = new Audio(src);
-  musicEl.loop = true;
-  musicEl.volume = 0.35;
-  musicEl.preload = 'auto';
+// ---- looping background music: two tracks, one per "scene" ----
+// 'menu'  → menu/home/setup music
+// 'game'  → in-game music
+// 'none'  → silence
+let menuEl = null, gameEl = null, scene = 'none';
+
+function makeTrack(src) {
+  const a = new Audio(src);
+  a.loop = true; a.volume = 0.35; a.preload = 'auto';
+  return a;
 }
+export function initMusic(menuSrc, gameSrc) {
+  menuEl = makeTrack(menuSrc);
+  gameEl = makeTrack(gameSrc);
+}
+
 export const music = {
-  play() {
-    if (!musicEl) return;
-    if (getSettings().music && musicEl.paused) musicEl.play().catch(() => {});
+  // Switch scene and (re)apply playback.
+  scene(name) { scene = name; this.apply(); },
+  // Make playback match the current scene + settings (idempotent; safe to spam).
+  apply() {
+    const want = getSettings().music ? scene : 'none';
+    const set = (el, on) => {
+      if (!el) return;
+      if (on && el.paused) el.play().catch(() => {});      // may reject until first gesture
+      else if (!on && !el.paused) el.pause();
+    };
+    set(menuEl, want === 'menu');
+    set(gameEl, want === 'game');
   },
-  pause() { if (musicEl && !musicEl.paused) musicEl.pause(); },
 };
 
 export const sfx = {

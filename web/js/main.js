@@ -81,8 +81,10 @@ function init() {
   profile = loadProfile();
   settings = loadSettings();
   initSound(() => settings);
-  initMusic('audio/music.mp3');
-  applySettings();
+  initMusic('audio/menu-music.mp3', 'audio/game-music.mp3');
+  music.scene('menu');
+  // browsers block autoplay until a gesture — start the current track on first interaction
+  window.addEventListener('pointerdown', () => music.apply(), { once: true });
 
   // home: profile + quick options
   $('nameInput').value = profile.name;
@@ -116,10 +118,6 @@ function segGet(id) {
   return on ? +on.dataset.val : null;
 }
 
-function applySettings() {
-  // music follows its setting + whether we're in a game (handled per-frame in render)
-  if (!settings.music) music.pause();
-}
 const openModal  = (id) => { $('modal-' + id).hidden = false; };
 const closeModal = (el) => { el.closest('.modal').hidden = true; };
 
@@ -197,6 +195,7 @@ function wireMenu() {
   // then always show a friendly goodbye so it's never a dead end.
   $('quitYes').addEventListener('click', () => {
     sfx.click();
+    music.scene('none');
     $('modal-quit').hidden = true;
     try { window.close(); } catch { /* ignore */ }
     $('modal-goodbye').hidden = false;
@@ -211,7 +210,7 @@ function wireMenu() {
 
   // settings controls
   $('setSfx').addEventListener('click', () => { settings.sfx = !settings.sfx; saveSettings(settings); syncSettingsUI(); if (settings.sfx) sfx.click(); });
-  $('setMusic').addEventListener('click', () => { settings.music = !settings.music; saveSettings(settings); syncSettingsUI(); if (!settings.music) music.pause(); });
+  $('setMusic').addEventListener('click', () => { settings.music = !settings.music; saveSettings(settings); syncSettingsUI(); music.apply(); });
   $('setVol').addEventListener('input', (e) => { settings.sfxVol = (+e.target.value) / 100; });
   $('setVol').addEventListener('change', () => { saveSettings(settings); sfx.pick(); });
 
@@ -229,7 +228,7 @@ function wireMenu() {
   });
 
   // results → back to menu
-  $('menuBtn').addEventListener('click', () => { sfx.click(); menuScreen = 'home'; engine.dispatch({ type: 'RESET' }); });
+  $('menuBtn').addEventListener('click', () => { sfx.click(); menuScreen = 'home'; music.scene('menu'); engine.dispatch({ type: 'RESET' }); });
 }
 
 function setActiveTool(tool) {
@@ -265,6 +264,7 @@ function startGame() {
   selectColor('#FB7185');
   setActiveTool('brush');
   sfx.start();
+  music.scene('game');
 
   document.querySelectorAll('.modal').forEach(m => m.hidden = true);
   showView('game');
@@ -295,9 +295,6 @@ function showView(name) {
 
 // ---------- render ----------
 function render(s) {
-  // background music plays during a game, pauses in the menu
-  if (settings.music && s.phase !== Phase.LOBBY) music.play(); else music.pause();
-
   // top-level view
   if (s.phase === Phase.LOBBY) { showView(menuScreen === 'setup' ? 'setup' : 'lobby'); return; }
   if (s.phase === Phase.GAME_END) { showView('results'); renderResults(s); ovChoose.hidden = ovReveal.hidden = true; return; }
