@@ -8,9 +8,8 @@ export const DEFAULT_PROFILE = { name: 'You', color: '#38BDF8', mood: 'grin' };
 export const DEFAULT_SETTINGS = {
   sfx: true,
   sfxVol: 0.6,
-  motion: true,        // animations on
+  music: true,         // background music on
   theme: 'night',      // reserved for future themes
-  lang: 'en',
   rounds: 3,
   drawTime: 75,
   category: 'all',     // 'all' or a category name

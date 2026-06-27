@@ -35,6 +35,22 @@ function note(freq, dur, { type = 'sine', vol = 0.25, t0 = 0, glideTo = null } =
   osc.stop(start + dur + 0.02);
 }
 
+// ---- looping background music (HTMLAudioElement) ----
+let musicEl = null;
+export function initMusic(src) {
+  musicEl = new Audio(src);
+  musicEl.loop = true;
+  musicEl.volume = 0.35;
+  musicEl.preload = 'auto';
+}
+export const music = {
+  play() {
+    if (!musicEl) return;
+    if (getSettings().music && musicEl.paused) musicEl.play().catch(() => {});
+  },
+  pause() { if (musicEl && !musicEl.paused) musicEl.pause(); },
+};
+
 export const sfx = {
   click:   () => note(420, 0.06, { type: 'triangle', vol: 0.18 }),
   pick:    () => note(560, 0.09, { type: 'triangle', vol: 0.2, glideTo: 720 }),

@@ -12,7 +12,7 @@ import { createBots, doodleFor } from './bots.js';
 import { clamp } from './util.js';
 import { WORDS } from './words.js';
 import { loadProfile, saveProfile, loadSettings, saveSettings } from './profile.js';
-import { initSound, sfx } from './sound.js';
+import { initSound, initMusic, sfx, music } from './sound.js';
 
 const CATEGORIES = [...new Set(WORDS.map(w => w.category))];
 let profile, settings;
@@ -81,6 +81,7 @@ function init() {
   profile = loadProfile();
   settings = loadSettings();
   initSound(() => settings);
+  initMusic('audio/music.mp3');
   applySettings();
 
   // home: profile + quick options
@@ -134,17 +135,16 @@ function segGet(id) {
 }
 
 function applySettings() {
-  document.body.classList.toggle('no-motion', !settings.motion);
-  $('btnSound')?.classList.toggle('off', !settings.sfx);
+  // music follows its setting + whether we're in a game (handled per-frame in render)
+  if (!settings.music) music.pause();
 }
 const openModal  = (id) => { $('modal-' + id).hidden = false; };
 const closeModal = (el) => { el.closest('.modal').hidden = true; };
 
 function syncSettingsUI() {
   $('setSfx').classList.toggle('on', settings.sfx);
-  $('setMotion').classList.toggle('on', settings.motion);
+  $('setMusic').classList.toggle('on', settings.music);
   $('setVol').value = Math.round((settings.sfxVol ?? 0.6) * 100);
-  $('setLang').value = settings.lang || 'en';
 }
 
 // ---------- controls ----------
@@ -228,11 +228,10 @@ function wireMenu() {
   });
 
   // settings controls
-  $('setSfx').addEventListener('click', () => { settings.sfx = !settings.sfx; saveSettings(settings); syncSettingsUI(); applySettings(); if (settings.sfx) sfx.click(); });
-  $('setMotion').addEventListener('click', () => { settings.motion = !settings.motion; saveSettings(settings); syncSettingsUI(); applySettings(); });
+  $('setSfx').addEventListener('click', () => { settings.sfx = !settings.sfx; saveSettings(settings); syncSettingsUI(); if (settings.sfx) sfx.click(); });
+  $('setMusic').addEventListener('click', () => { settings.music = !settings.music; saveSettings(settings); syncSettingsUI(); if (!settings.music) music.pause(); });
   $('setVol').addEventListener('input', (e) => { settings.sfxVol = (+e.target.value) / 100; });
   $('setVol').addEventListener('change', () => { saveSettings(settings); sfx.pick(); });
-  $('setLang').addEventListener('change', (e) => { settings.lang = e.target.value; saveSettings(settings); });
 
   // home quick options
   ['segRounds', 'segTime'].forEach(id => {
@@ -320,6 +319,9 @@ function showView(name) {
 
 // ---------- render ----------
 function render(s) {
+  // background music plays during a game, pauses in the menu
+  if (settings.music && s.phase !== Phase.LOBBY) music.play(); else music.pause();
+
   // top-level view
   if (s.phase === Phase.LOBBY) { showView(menuScreen === 'setup' ? 'setup' : 'lobby'); return; }
   if (s.phase === Phase.GAME_END) { showView('results'); renderResults(s); ovChoose.hidden = ovReveal.hidden = true; return; }

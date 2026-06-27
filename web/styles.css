@@ -384,8 +384,8 @@ select.text-field{cursor:pointer;}
 .modal-head{display:flex; align-items:center; justify-content:space-between;}
 .modal-title{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:24px;}
 .modal-body{display:flex; flex-direction:column; gap:14px;}
-.set-row{display:flex; align-items:center; justify-content:space-between; gap:16px;}
-.set-row>span{font-weight:800; font-size:15px;}
+.set-row{display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:46px; padding:0 4px;}
+.set-row>span{font-weight:800; font-size:16px;}
 .text-field.sm{height:40px; font-size:15px; min-width:150px;}
 .btn-done{height:52px; background:var(--teal); box-shadow:0 6px 0 var(--teal-sh); color:var(--ink); font-size:20px;}
 .btn-done:hover{box-shadow:0 9px 0 var(--teal-sh);}
