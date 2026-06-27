@@ -10,276 +10,183 @@
 <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-<main class="stage">
+<main class="stage" id="stage">
 
-  <!-- ============ TOP BAR ============ -->
-  <header class="topbar">
-    <!-- logo -->
-    <div class="logo">
-      <svg viewBox="0 0 520 140" font-family="Fredoka, sans-serif">
-        <defs><linearGradient id="badge" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#2DD4BF"/><stop offset="1" stop-color="#8B5CF6"/>
-        </linearGradient></defs>
-        <rect x="16" y="24" width="104" height="104" rx="26" fill="#1E1B33"/>
-        <rect x="16" y="16" width="104" height="104" rx="26" fill="url(#badge)" stroke="#1E1B33" stroke-width="3.5"/>
-        <rect x="24" y="24" width="88" height="40" rx="20" fill="#FFFFFF" opacity="0.18"/>
-        <g transform="translate(68,68)">
-          <g transform="rotate(38)">
-            <rect x="-9" y="-46" width="18" height="12" rx="5" fill="#FB7185" stroke="#1E1B33" stroke-width="3"/>
-            <rect x="-9" y="-36" width="18" height="46" rx="4" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
-            <line x1="0" y1="-34" x2="0" y2="8" stroke="#1E1B33" stroke-width="2" opacity="0.25"/>
-            <path d="M -9 8 L 9 8 L 0 30 Z" fill="#F4D9A0" stroke="#1E1B33" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M -4.5 19 L 4.5 19 L 0 30 Z" fill="#1E1B33"/>
-          </g>
-          <g transform="rotate(-38)">
-            <rect x="-7" y="-46" width="14" height="44" rx="6" fill="#8B5CF6" stroke="#1E1B33" stroke-width="3"/>
-            <rect x="-8.5" y="-4" width="17" height="13" rx="3" fill="#D7D7E2" stroke="#1E1B33" stroke-width="3"/>
-            <path d="M -8 9 L 8 9 L 4 30 Q 0 36 -4 30 Z" fill="#2DD4BF" stroke="#1E1B33" stroke-width="3" stroke-linejoin="round"/>
-          </g>
-        </g>
-        <g font-weight="700" font-size="56" letter-spacing="-1">
-          <text x="140" y="86" fill="#1E1B33" stroke="#1E1B33" stroke-width="7" stroke-linejoin="round">Draw<tspan>Battle</tspan></text>
-          <text x="140" y="86" fill="#FFFFFF">Draw<tspan fill="#FB5E7E">Battle</tspan></text>
-        </g>
-        <text x="142" y="116" font-family="Nunito, sans-serif" font-weight="700" font-size="16" letter-spacing="5" fill="#A8A3D6">DRAW · GUESS · WIN</text>
-      </svg>
-    </div>
-
-    <!-- word banner -->
-    <div class="wordbanner panel">
-      <div class="chip-cat"><div class="k">CATEGORY</div><div class="v">Animals</div></div>
-      <div class="blanks">
-        <div class="slot">E</div>
-        <div class="slot empty"></div>
-        <div class="slot empty"></div>
-        <div class="slot">P</div>
-        <div class="slot empty"></div>
-        <div class="slot empty"></div>
-        <div class="slot empty"></div>
-        <div class="slot empty"></div>
-        <div class="count">8 letters</div>
+  <!-- ===================================================== LOBBY -->
+  <section class="view view-lobby" id="view-lobby">
+    <div class="lobby-inner">
+      <div class="logo logo-big" id="lobbyLogo"></div>
+      <div class="lobby-card panel">
+        <label class="lf">
+          <span>Your name</span>
+          <input id="nameInput" class="text-field" maxlength="14" value="You" autocomplete="off"/>
+        </label>
+        <div class="lf-row">
+          <label class="lf">
+            <span>Rounds</span>
+            <select id="roundsSel" class="text-field">
+              <option>2</option><option selected>3</option><option>4</option><option>5</option>
+            </select>
+          </label>
+          <label class="lf">
+            <span>Draw time</span>
+            <select id="timeSel" class="text-field">
+              <option value="50">50s</option><option value="75" selected>75s</option><option value="90">90s</option>
+            </select>
+          </label>
+        </div>
+        <div class="lobby-players" id="lobbyPlayers"></div>
+        <button class="btn btn-cta" id="startBtn">PLAY</button>
+        <div class="lobby-note">Playing locally vs. 3 friendly bots · no server needed</div>
       </div>
     </div>
-
-    <!-- timer -->
-    <div class="timer">
-      <svg viewBox="0 0 140 150" font-family="Fredoka, sans-serif">
-        <circle cx="70" cy="76" r="56" fill="#15112E"/>
-        <circle cx="70" cy="70" r="56" fill="#2E2566" stroke="#1E1B33" stroke-width="3.5"/>
-        <circle cx="70" cy="70" r="44" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/>
-        <circle cx="70" cy="70" r="50" fill="none" stroke="#2DD4BF" stroke-width="9"
-                stroke-linecap="round" stroke-dasharray="220 314" transform="rotate(-90 70 70)"/>
-        <text x="70" y="80" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="40">42</text>
-        <text x="70" y="98" text-anchor="middle" fill="#A8A3D6" font-family="Nunito" font-weight="700" font-size="11" letter-spacing="2">SECONDS</text>
-        <g transform="translate(70,14)">
-          <rect x="-15" y="0" width="30" height="14" rx="7" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
-          <circle cx="0" cy="7" r="3" fill="#1E1B33"/>
-        </g>
-      </svg>
-    </div>
-  </header>
-
-  <!-- ============ SCOREBOARD ============ -->
-  <aside class="scoreboard panel">
-    <div class="sb-head"><span class="t">Players</span><span class="c">4 / 8</span></div>
-
-    <div class="prow leader">
-      <span class="rank">1</span>
-      <span class="av">
-        <svg width="40" height="40" viewBox="0 0 40 40">
-          <rect x="0" y="0" width="40" height="40" rx="13" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5"/>
-          <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
-          <path d="M13 27 q7 7 14 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <svg width="40" height="20" viewBox="0 0 40 20" style="position:absolute;left:0;top:-9px">
-          <path d="M5 14 L11 20 L20 8 L29 20 L35 14 L33 24 L7 24 Z" fill="#FFD45E" stroke="#1E1B33" stroke-width="2" stroke-linejoin="round" transform="translate(0,-8)"/>
-        </svg>
-      </span>
-      <span class="who"><div class="name">Maya</div><div class="sub ok">+120 ✓ guessed</div></span>
-      <span class="score">2450</span>
-    </div>
-
-    <div class="prow">
-      <span class="rank">2</span>
-      <span class="av"><svg width="40" height="40" viewBox="0 0 40 40">
-        <rect x="0" y="0" width="40" height="40" rx="13" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/>
-        <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
-        <path d="M13 26 q7 5 14 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
-      </svg></span>
-      <span class="who"><div class="name">Leo</div><div class="sub ok">+90 ✓ guessed</div></span>
-      <span class="score">2110</span>
-    </div>
-
-    <div class="prow drawing">
-      <span class="rank">3</span>
-      <span class="av">
-        <svg width="40" height="40" viewBox="0 0 40 40">
-          <rect x="0" y="0" width="40" height="40" rx="13" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/>
-          <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
-          <path d="M14 28 q6 -4 12 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <svg width="20" height="20" viewBox="0 0 20 20" style="position:absolute;right:-4px;bottom:-4px">
-          <circle cx="10" cy="10" r="10" fill="#FFB23E" stroke="#1E1B33" stroke-width="2"/>
-          <g transform="translate(10,10) rotate(45)"><rect x="-2" y="-6" width="4" height="9" fill="#FFFFFF" stroke="#1E1B33" stroke-width="1.5"/><path d="M-2 3 L2 3 L0 6 Z" fill="#1E1B33"/></g>
-        </svg>
-      </span>
-      <span class="who"><div class="name">Aria</div><div class="sub draw">drawing…</div></span>
-      <span class="score">1980</span>
-    </div>
-
-    <div class="prow">
-      <span class="rank">4</span>
-      <span class="av"><svg width="40" height="40" viewBox="0 0 40 40">
-        <rect x="0" y="0" width="40" height="40" rx="13" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5"/>
-        <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
-        <path d="M14 27 h12" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
-      </svg></span>
-      <span class="who"><div class="name">Sam</div><div class="sub wait">guessing…</div></span>
-      <span class="score">1600</span>
-    </div>
-  </aside>
-
-  <!-- ============ CANVAS ============ -->
-  <section class="canvas">
-    <div class="turn-ribbon">
-      <span class="tick">
-        <svg width="11" height="11" viewBox="0 0 11 11"><path d="M2 6 l2.5 2.5 l4.5 -6" fill="none" stroke="#1E9C8E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-      YOUR TURN
-    </div>
-    <div class="paper">
-      <svg viewBox="0 0 500 320" preserveAspectRatio="xMidYMid meet">
-        <g stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <circle cx="410" cy="80" r="26" fill="#FFE08A" stroke="#FFB23E" stroke-width="4"/>
-          <g stroke="#FFB23E" stroke-width="4">
-            <line x1="410" y1="40" x2="410" y2="28"/>
-            <line x1="445" y1="80" x2="458" y2="80"/>
-            <line x1="436" y1="54" x2="446" y2="44"/>
-          </g>
-          <path d="M130 250 L130 170 L190 128 L250 170 L250 250 Z" fill="#BDEFE8" stroke="#2DD4BF" stroke-width="5"/>
-          <path d="M118 176 L190 122 L262 176" stroke="#FB5E7E" stroke-width="6"/>
-          <rect x="166" y="202" width="34" height="48" rx="4" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="5"/>
-          <path d="M70 270 Q280 256 450 270" stroke="#A3E635" stroke-width="6"/>
-        </g>
-      </svg>
-    </div>
-    <span class="rivet tl" style="background:#FFB23E"></span>
-    <span class="rivet tr" style="background:#FB5E7E"></span>
-    <span class="rivet bl" style="background:#A3E635"></span>
-    <span class="rivet br" style="background:#38BDF8"></span>
   </section>
 
-  <!-- ============ GUESS BOX ============ -->
-  <aside class="guessbox panel">
-    <div class="gb-head"><span class="t">Guesses</span></div>
-    <div class="gb-feed">
-      <div class="msg"><span class="nm leo">Leo</span><span class="gx">tiger?</span></div>
-      <div class="msg"><span class="nm sam">Sam</span><span class="gx">a cat!</span></div>
-      <div class="sys close">Sam is close!</div>
-      <div class="correct">
-        <span class="tick"><svg width="11" height="11" viewBox="0 0 11 11"><path d="M2 6 l2.5 2.5 l4.5 -6" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Maya guessed the word!
-      </div>
-      <div class="msg"><span class="nm aria">Aria</span><span class="gx">lion</span></div>
-      <div class="sys join">Kai joined the game</div>
-    </div>
-    <div class="gb-input">
-      <div class="field">Type your guess…</div>
-      <button class="send btn" style="background:#2DD4BF;box-shadow:0 6px 0 #1E9C8E">
-        <svg width="24" height="24" viewBox="0 0 24 24" style="position:relative"><path d="M4 12 L18 5 L13 18 L10 13 Z" fill="#1E1B33" stroke="#1E1B33" stroke-width="2" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </aside>
+  <!-- ===================================================== GAME -->
+  <section class="view view-game" id="view-game" hidden>
+    <header class="topbar">
+      <div class="logo" id="gameLogo"></div>
 
-  <!-- ============ DOCK ============ -->
-  <div class="dock">
-    <!-- toolbar -->
-    <div class="toolbar panel">
-      <!-- brush (active) -->
-      <div class="tool active">
-        <svg viewBox="0 0 54 54">
-          <g transform="translate(27,27) rotate(45)">
+      <div class="wordbanner panel">
+        <div class="chip-cat"><div class="k">CATEGORY</div><div class="v" id="wordCategory">—</div></div>
+        <div class="blanks">
+          <div class="slots" id="wordSlots"></div>
+          <div class="count" id="wordCount"></div>
+        </div>
+      </div>
+
+      <div class="timer">
+        <svg viewBox="0 0 140 150" font-family="Fredoka, sans-serif">
+          <circle cx="70" cy="76" r="56" fill="#15112E"/>
+          <circle cx="70" cy="70" r="56" fill="#2E2566" stroke="#1E1B33" stroke-width="3.5"/>
+          <circle cx="70" cy="70" r="44" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/>
+          <circle id="timerRing" cx="70" cy="70" r="50" fill="none" stroke="#2DD4BF" stroke-width="9"
+                  stroke-linecap="round" stroke-dasharray="314 314" transform="rotate(-90 70 70)"/>
+          <text id="timerText" x="70" y="80" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="40">0</text>
+          <text x="70" y="98" text-anchor="middle" fill="#A8A3D6" font-family="Nunito" font-weight="700" font-size="11" letter-spacing="2">SECONDS</text>
+          <g transform="translate(70,14)">
+            <rect x="-15" y="0" width="30" height="14" rx="7" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
+            <circle cx="0" cy="7" r="3" fill="#1E1B33"/>
+          </g>
+        </svg>
+      </div>
+    </header>
+
+    <aside class="scoreboard panel">
+      <div class="sb-head"><span class="t">Players</span><span class="c" id="playerCount">0 / 8</span></div>
+      <div id="scoreList"></div>
+    </aside>
+
+    <section class="canvas">
+      <div class="turn-ribbon"><span class="tick" id="ribbonTick"></span><span id="ribbonText">YOUR TURN</span></div>
+      <div class="paper"><canvas id="board"></canvas></div>
+      <span class="rivet tl" style="background:#FFB23E"></span>
+      <span class="rivet tr" style="background:#FB5E7E"></span>
+      <span class="rivet bl" style="background:#A3E635"></span>
+      <span class="rivet br" style="background:#38BDF8"></span>
+    </section>
+
+    <aside class="guessbox panel">
+      <div class="gb-head"><span class="t">Guesses</span></div>
+      <div class="gb-feed" id="guessFeed"></div>
+      <div class="gb-input">
+        <input id="guessInput" class="field-input" placeholder="Type your guess…" maxlength="24" autocomplete="off"/>
+        <button class="send btn" id="sendBtn" style="background:#2DD4BF;box-shadow:0 6px 0 #1E9C8E">
+          <svg width="24" height="24" viewBox="0 0 24 24" style="position:relative"><path d="M4 12 L18 5 L13 18 L10 13 Z" fill="#1E1B33" stroke="#1E1B33" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="dock">
+      <div class="toolbar panel" id="toolbar">
+        <div class="tool active" data-tool="brush" title="Brush">
+          <svg viewBox="0 0 54 54"><g transform="translate(27,27) rotate(45)">
             <rect x="-5" y="-19" width="10" height="21" rx="4" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/>
             <rect x="-6" y="1" width="12" height="8" rx="2" fill="#D7D7E2" stroke="#1E1B33" stroke-width="2.5"/>
             <path d="M-6 8 L6 8 L3 19 Q0 23 -3 19 Z" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
-          </g>
-          <circle cx="44" cy="46" r="6" fill="#A3E635" stroke="#1E1B33" stroke-width="2.5"/>
-        </svg>
-      </div>
-      <!-- eraser -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54">
-          <g transform="translate(27,28) rotate(-32)">
+          </g><circle cx="44" cy="46" r="6" fill="#A3E635" stroke="#1E1B33" stroke-width="2.5"/></svg>
+        </div>
+        <div class="tool" data-tool="eraser" title="Eraser">
+          <svg viewBox="0 0 54 54"><g transform="translate(27,28) rotate(-32)">
             <rect x="-14" y="-6" width="28" height="20" rx="5" fill="#FFB6C9" stroke="#1E1B33" stroke-width="2.5"/>
             <rect x="-14" y="4" width="28" height="10" rx="3" fill="#FFFFFF" stroke="#1E1B33" stroke-width="2.5"/>
             <line x1="0" y1="-6" x2="0" y2="14" stroke="#1E1B33" stroke-width="2" opacity="0.25"/>
-          </g>
-        </svg>
-      </div>
-      <!-- fill bucket -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54">
-          <g transform="translate(27,26)">
+          </g></svg>
+        </div>
+        <div class="tool" data-tool="fill" title="Fill">
+          <svg viewBox="0 0 54 54"><g transform="translate(27,26)">
             <path d="M-13 -2 L2 -16 L16 -2 L2 12 Z" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
             <path d="M16 -2 q6 3 6 9 a3 3 0 1 1 -6 0 q0 -4 0 -9" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
             <path d="M-14 4 L2 16 L18 4 Q2 22 -14 4 Z" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
             <line x1="2" y1="-16" x2="2" y2="-22" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-        </svg>
-      </div>
-      <!-- line -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54">
-          <circle cx="15" cy="39" r="6" fill="#A3E635" stroke="#1E1B33" stroke-width="2.5"/>
-          <circle cx="39" cy="15" r="6" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/>
-          <line x1="19" y1="35" x2="35" y2="19" stroke="#1E1B33" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <span class="tdiv"></span>
-
-      <!-- undo -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54"><path d="M35 35 Q38 20 22 20 L13 20 M20 13 L12 20 L20 27" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <!-- redo -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54"><path d="M19 35 Q16 20 32 20 L41 20 M34 13 L42 20 L34 27" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-
-      <span class="tdiv"></span>
-
-      <!-- clear -->
-      <div class="tool danger">
-        <svg viewBox="0 0 54 54"><path d="M16 20 L38 20 M20 20 L21 40 Q21 42 23 42 L31 42 Q33 42 33 40 L34 20 M23 20 L23 16 Q23 14 25 14 L29 14 Q31 14 31 16 L31 20" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <!-- eyedropper -->
-      <div class="tool">
-        <svg viewBox="0 0 54 54">
-          <g transform="translate(27,27)">
+          </g></svg>
+        </div>
+        <div class="tool" data-tool="line" title="Line">
+          <svg viewBox="0 0 54 54">
+            <circle cx="15" cy="39" r="6" fill="#A3E635" stroke="#1E1B33" stroke-width="2.5"/>
+            <circle cx="39" cy="15" r="6" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/>
+            <line x1="19" y1="35" x2="35" y2="19" stroke="#1E1B33" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="tdiv"></span>
+        <div class="tool" data-action="undo" title="Undo">
+          <svg viewBox="0 0 54 54"><path d="M35 35 Q38 20 22 20 L13 20 M20 13 L12 20 L20 27" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="tool" data-action="redo" title="Redo">
+          <svg viewBox="0 0 54 54"><path d="M19 35 Q16 20 32 20 L41 20 M34 13 L42 20 L34 27" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="tdiv"></span>
+        <div class="tool danger" data-action="clear" title="Clear">
+          <svg viewBox="0 0 54 54"><path d="M16 20 L38 20 M20 20 L21 40 Q21 42 23 42 L31 42 Q33 42 33 40 L34 20 M23 20 L23 16 Q23 14 25 14 L29 14 Q31 14 31 16 L31 20" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="tool" data-tool="eyedropper" title="Pick color">
+          <svg viewBox="0 0 54 54"><g transform="translate(27,27)">
             <rect x="2" y="-16" width="9" height="16" rx="4" transform="rotate(45 6 -8)" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5"/>
             <path d="M-2 4 L-12 14 Q-14 16 -12 18 Q-10 20 -8 18 L2 8 Z" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
-          </g>
-        </svg>
+          </g></svg>
+        </div>
+      </div>
+
+      <div class="colorpicker panel">
+        <div class="cp-side">
+          <div class="lbl">COLOR</div>
+          <div class="cur" id="curColor"></div>
+          <div class="lbl">SIZE</div>
+          <div class="sizes">
+            <i class="s1" data-size="0"></i><i class="s2" data-size="1"></i><i class="s3 active" data-size="2"></i>
+          </div>
+        </div>
+        <div class="grid" id="swatchGrid"></div>
       </div>
     </div>
 
-    <!-- color picker -->
-    <div class="colorpicker panel">
-      <div class="cp-side">
-        <div class="lbl">COLOR</div>
-        <div class="cur"></div>
-        <div class="lbl">SIZE</div>
-        <div class="sizes"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
-      </div>
-      <div class="grid">
-        <div class="sw" style="background:#FFFFFF"></div><div class="sw" style="background:#C1C1C1"></div><div class="sw" style="background:#EF4444"></div><div class="sw" style="background:#F97316"></div><div class="sw" style="background:#FACC15"></div><div class="sw" style="background:#84CC16"></div><div class="sw" style="background:#22C55E"></div><div class="sw" style="background:#14B8A6"></div>
-        <div class="sw" style="background:#000000"></div><div class="sw" style="background:#4B4B4B"></div><div class="sw" style="background:#7F1D1D"></div><div class="sw" style="background:#9A3412"></div><div class="sw" style="background:#854D0E"></div><div class="sw" style="background:#3F6212"></div><div class="sw" style="background:#166534"></div><div class="sw" style="background:#115E59"></div>
-        <div class="sw" style="background:#38BDF8"></div><div class="sw" style="background:#2563EB"></div><div class="sw" style="background:#8B5CF6"></div><div class="sw" style="background:#D946EF"></div><div class="sw sel" style="background:#FB7185"></div><div class="sw" style="background:#F472B6"></div><div class="sw" style="background:#A16207"></div><div class="sw" style="background:#FBE8C0"></div>
-      </div>
+    <div class="game-dim" id="gameDim" hidden></div>
+  </section>
+
+  <!-- ===================================================== RESULTS -->
+  <section class="view view-results" id="view-results" hidden>
+    <div class="results-inner">
+      <h1 class="results-title">Game Over!</h1>
+      <div class="podium" id="podium"></div>
+      <button class="btn btn-cta" id="againBtn">Play Again</button>
+    </div>
+  </section>
+
+  <!-- ===================================================== OVERLAYS -->
+  <div class="overlay" id="overlay-choose" hidden>
+    <div class="overlay-card panel">
+      <div class="overlay-title" id="chooseTitle">Choose a word</div>
+      <div class="choose-words" id="chooseWords"></div>
+      <div class="overlay-sub" id="chooseSub"></div>
     </div>
   </div>
 
+  <div class="overlay" id="overlay-reveal" hidden>
+    <div class="overlay-card panel" id="revealBody"></div>
+  </div>
+
 </main>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
