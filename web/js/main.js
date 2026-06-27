@@ -10,6 +10,12 @@ import { createEngine, Phase } from './engine.js';
 import { DrawCanvas } from './canvas.js';
 import { createBots, doodleFor } from './bots.js';
 import { clamp } from './util.js';
+import { WORDS } from './words.js';
+import { loadProfile, saveProfile, loadSettings, saveSettings } from './profile.js';
+import { initSound, sfx } from './sound.js';
+
+const CATEGORIES = [...new Set(WORDS.map(w => w.category))];
+let profile, settings;
 
 // ---------- players (you + 3 local bots) ----------
 const HUMAN_ID = 'you';
@@ -70,26 +76,79 @@ function init() {
   $('lobbyLogo').innerHTML = LOGO_SVG;
   $('gameLogo').innerHTML = LOGO_SVG;
 
-  // lobby player chips
-  $('lobbyPlayers').innerHTML = [HUMAN, ...BOTS]
-    .map(p => `<span class="chip-player">${avatarSVG(p.color, p.mood)}${esc(p.name)}</span>`).join('');
+  profile = loadProfile();
+  settings = loadSettings();
+  initSound(() => settings);
+  applySettings();
 
-  // color swatches
+  // home: profile + quick options
+  $('nameInput').value = profile.name;
+  HUMAN.name = profile.name; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
+  renderHomeAvatar();
+  $('catSel').innerHTML = `<option value="all">All categories</option>` +
+    CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
+  $('catSel').value = settings.category || 'all';
+  segSet('segRounds', settings.rounds);
+  segSet('segTime', settings.drawTime);
+  renderModes();
+
+  // in-game color swatches
   $('swatchGrid').innerHTML = SWATCHES
     .map(c => `<div class="sw" data-color="${c}" style="background:${c}"></div>`).join('');
 
-  canvas = new DrawCanvas($('board'), {
-    onColorPick: (c) => selectColor(c),
-  });
+  canvas = new DrawCanvas($('board'), { onColorPick: (c) => selectColor(c) });
 
   wireControls();
+  wireMenu();
   requestAnimationFrame(loop);
+}
+
+// ---------- home / menu helpers ----------
+const MODES = [
+  { key: 'classic', name: 'Classic', desc: 'Draw & guess, score for speed', live: true,
+    ico: `<svg viewBox="0 0 46 46"><g transform="translate(23,23) rotate(45)"><rect x="-5" y="-17" width="10" height="20" rx="4" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/><path d="M-6 3 L6 3 L3 15 Q0 19 -3 15 Z" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/></g></svg>` },
+  { key: 'blitz', name: 'Blitz', desc: 'Short rounds, double points', live: false,
+    ico: `<svg viewBox="0 0 46 46"><path d="M26 6 L14 26 H22 L20 40 L33 19 H25 Z" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/></svg>` },
+  { key: 'teams', name: 'Teams', desc: 'Guess together, win together', live: false,
+    ico: `<svg viewBox="0 0 46 46"><rect x="6" y="14" width="18" height="18" rx="6" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5"/><rect x="22" y="14" width="18" height="18" rx="6" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/></svg>` },
+];
+function renderModes() {
+  $('modesRail').innerHTML = MODES.map(m => `
+    <div class="mode-card ${m.live ? '' : 'soon'}" data-mode="${m.key}" data-live="${m.live}">
+      <span class="mode-badge ${m.live ? 'live' : 'soon'}">${m.live ? 'LIVE' : 'SOON'}</span>
+      <span class="mc-ico">${m.ico}</span>
+      <span class="mc-name">${m.name}</span>
+      <span class="mc-desc">${m.desc}</span>
+    </div>`).join('');
+}
+function renderHomeAvatar() { $('homeAvatar').innerHTML = avatarSVG(profile.color, profile.mood); }
+
+function segSet(id, val) {
+  [...$(id).children].forEach(b => b.classList.toggle('on', b.dataset.val == val));
+}
+function segGet(id) {
+  const on = $(id).querySelector('.on');
+  return on ? +on.dataset.val : null;
+}
+
+function applySettings() {
+  document.body.classList.toggle('no-motion', !settings.motion);
+  $('btnSound')?.classList.toggle('off', !settings.sfx);
+}
+const openModal  = (id) => { $('modal-' + id).hidden = false; };
+const closeModal = (el) => { el.closest('.modal').hidden = true; };
+
+function syncSettingsUI() {
+  $('setSfx').classList.toggle('on', settings.sfx);
+  $('setMotion').classList.toggle('on', settings.motion);
+  $('setVol').value = Math.round((settings.sfxVol ?? 0.6) * 100);
+  $('setLang').value = settings.lang || 'en';
 }
 
 // ---------- controls ----------
 function wireControls() {
   $('startBtn').addEventListener('click', startGame);
-  $('againBtn').addEventListener('click', () => { engine.dispatch({ type: 'RESET' }); });
+  $('againBtn').addEventListener('click', () => startGame()); // Rematch with same settings
 
   // tools & actions
   $('toolbar').addEventListener('click', (e) => {
@@ -134,8 +193,55 @@ function wireControls() {
   // choosing
   $('chooseWords').addEventListener('click', (e) => {
     const b = e.target.closest('.choose-word'); if (!b) return;
+    sfx.pick();
     engine.dispatch({ type: 'CHOOSE_WORD', by: HUMAN_ID, word: b.dataset.word });
   });
+}
+
+// ---------- menu wiring ----------
+function wireMenu() {
+  $('btnSettings').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
+  $('btnLang').addEventListener('click', () => { sfx.click(); syncSettingsUI(); openModal('settings'); });
+  $('btnHowto').addEventListener('click', () => { sfx.click(); openModal('howto'); });
+  $('btnSound').addEventListener('click', () => {
+    settings.sfx = !settings.sfx; saveSettings(settings); applySettings(); if (settings.sfx) sfx.click();
+  });
+
+  // close modals (close button or backdrop click)
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', (e) => {
+      if (e.target === m || e.target.closest('[data-close]')) { m.hidden = true; sfx.click(); }
+    });
+  });
+
+  // settings controls
+  $('setSfx').addEventListener('click', () => { settings.sfx = !settings.sfx; saveSettings(settings); syncSettingsUI(); applySettings(); if (settings.sfx) sfx.click(); });
+  $('setMotion').addEventListener('click', () => { settings.motion = !settings.motion; saveSettings(settings); syncSettingsUI(); applySettings(); });
+  $('setVol').addEventListener('input', (e) => { settings.sfxVol = (+e.target.value) / 100; });
+  $('setVol').addEventListener('change', () => { saveSettings(settings); sfx.pick(); });
+  $('setLang').addEventListener('change', (e) => { settings.lang = e.target.value; saveSettings(settings); });
+
+  // home quick options
+  ['segRounds', 'segTime'].forEach(id => {
+    $(id).addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      segSet(id, b.dataset.val); sfx.click();
+    });
+  });
+  $('catSel').addEventListener('change', () => sfx.click());
+  $('nameInput').addEventListener('change', () => {
+    profile.name = ($('nameInput').value.trim() || 'You').slice(0, 14);
+    saveProfile(profile); renderHomeAvatar();
+  });
+
+  // mode cards (live → play)
+  $('modesRail').addEventListener('click', (e) => {
+    const card = e.target.closest('.mode-card'); if (!card) return;
+    if (card.dataset.live === 'true') startGame();
+  });
+
+  // results → back to menu
+  $('menuBtn').addEventListener('click', () => { sfx.click(); engine.dispatch({ type: 'RESET' }); });
 }
 
 function setActiveTool(tool) {
@@ -150,22 +256,29 @@ function selectColor(c) {
 
 // ---------- start / loop ----------
 function startGame() {
-  const cfg = {
-    rounds: +$('roundsSel').value,
-    drawTime: +$('timeSel').value,
-  };
-  engine = createEngine(cfg);
-  bots = createBots(engine, HUMAN_ID);
+  const rounds = segGet('segRounds') || 3;
+  const drawTime = segGet('segTime') || 75;
+  const category = $('catSel').value;
+  const name = ($('nameInput').value.trim() || 'You').slice(0, 14);
 
-  HUMAN.name = ($('nameInput').value.trim() || 'You').slice(0, 14);
+  // persist choices
+  profile.name = name; saveProfile(profile);
+  Object.assign(settings, { rounds, drawTime, category }); saveSettings(settings);
+  HUMAN.name = name; HUMAN.color = profile.color; HUMAN.mood = profile.mood;
+
+  engine = createEngine({ rounds, drawTime, categories: category === 'all' ? null : [category] });
+  bots = createBots(engine, HUMAN_ID);
   for (const p of [HUMAN, ...BOTS]) engine.dispatch({ type: 'ADD_PLAYER', player: p });
   engine.dispatch({ type: 'START_GAME' });
 
   turnKey = null;
   cache.score = cache.feed = cache.word = cache.choose = cache.reveal = '';
+  cache.lastCorrectId = cache.lastTickSec = cache.results = null;
   selectColor('#FB7185');
   setActiveTool('brush');
+  sfx.start();
 
+  document.querySelectorAll('.modal').forEach(m => m.hidden = true);
   showView('game');
   requestAnimationFrame(() => { canvas.relayout(); gameReady = true; });
 
@@ -236,11 +349,14 @@ function render(s) {
 }
 
 function renderTimer(s) {
-  $('timerText').textContent = Math.max(0, Math.ceil(s.timeLeft));
+  const sec = Math.max(0, Math.ceil(s.timeLeft));
+  $('timerText').textContent = sec;
   const frac = clamp(s.timeLeft / s.phaseDuration, 0, 1);
   const C = 2 * Math.PI * 50;
   $('timerRing').setAttribute('stroke-dasharray', `${(frac * C).toFixed(1)} ${C.toFixed(1)}`);
   $('timerRing').setAttribute('stroke', frac < 0.25 ? '#FB5E7E' : (frac < 0.5 ? '#FFB23E' : '#2DD4BF'));
+  if (s.phase === Phase.DRAWING && sec > 0 && sec <= 5 && sec !== cache.lastTickSec) sfx.tick();
+  cache.lastTickSec = sec;
 }
 
 function renderWord(s, humanDrawer) {
@@ -307,6 +423,8 @@ function renderFeed(s) {
   const feed = $('guessFeed');
   feed.innerHTML = msgs.map(msgHTML).join('');
   feed.scrollTop = feed.scrollHeight;
+  const lastCorrect = [...msgs].reverse().find(m => m.kind === 'correct');
+  if (lastCorrect && lastCorrect.id !== cache.lastCorrectId) { cache.lastCorrectId = lastCorrect.id; sfx.correct(); }
 }
 
 function renderRibbon(s, humanDrawer) {
@@ -360,6 +478,7 @@ function renderReveal(s) {
 function renderResults(s) {
   if (cache.results === s.seq) return;
   cache.results = s.seq;
+  sfx.win();
   const top = s.ranking.slice(0, 3);
   const order = [top[1], top[0], top[2]].filter(Boolean); // 2nd, 1st, 3rd
   const meta = {

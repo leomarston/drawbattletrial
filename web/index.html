@@ -12,33 +12,51 @@
 <body>
 <main class="stage" id="stage">
 
-  <!-- ===================================================== LOBBY -->
-  <section class="view view-lobby" id="view-lobby">
-    <div class="lobby-inner">
-      <div class="logo logo-big" id="lobbyLogo"></div>
-      <div class="lobby-card panel">
-        <label class="lf">
-          <span>Your name</span>
-          <input id="nameInput" class="text-field" maxlength="14" value="You" autocomplete="off"/>
-        </label>
-        <div class="lf-row">
-          <label class="lf">
-            <span>Rounds</span>
-            <select id="roundsSel" class="text-field">
-              <option>2</option><option selected>3</option><option>4</option><option>5</option>
-            </select>
-          </label>
-          <label class="lf">
-            <span>Draw time</span>
-            <select id="timeSel" class="text-field">
-              <option value="50">50s</option><option value="75" selected>75s</option><option value="90">90s</option>
-            </select>
-          </label>
+  <!-- ===================================================== HOME -->
+  <section class="view view-home" id="view-lobby">
+    <div class="home-topbar">
+      <button class="iconbtn" id="btnSound" title="Sound">
+        <svg viewBox="0 0 28 28"><path d="M7 11 H11 L16 7 V21 L11 17 H7 Z" fill="#fff"/><path id="soundWaves" d="M19 10 q3 4 0 8 M22 7 q6 7 0 14" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+      <button class="iconbtn" id="btnLang" title="Language">
+        <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="9" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M5 14 H23 M14 5 q5 9 0 18 M14 5 q-5 9 0 18" fill="none" stroke="#fff" stroke-width="2.2"/></svg>
+      </button>
+      <button class="iconbtn" id="btnHowto" title="How to play"><span class="iq">?</span></button>
+      <button class="iconbtn" id="btnSettings" title="Settings">
+        <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="3.4" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M14 4 v3 M14 21 v3 M4 14 h3 M21 14 h3 M7 7 l2 2 M19 19 l2 2 M21 7 l-2 2 M9 19 l-2 2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="home-main">
+      <div class="logo home-logo" id="lobbyLogo"></div>
+
+      <div class="home-card panel">
+        <div class="home-profile">
+          <span class="home-av" id="homeAvatar"></span>
+          <input id="nameInput" class="text-field name-field" maxlength="14" value="You" autocomplete="off" placeholder="Your name"/>
         </div>
-        <div class="lobby-players" id="lobbyPlayers"></div>
+
+        <div class="opt-grid">
+          <div class="lf"><span>Rounds</span>
+            <div class="seg" id="segRounds">
+              <button data-val="2">2</button><button data-val="3" class="on">3</button><button data-val="4">4</button><button data-val="5">5</button>
+            </div>
+          </div>
+          <div class="lf"><span>Draw time</span>
+            <div class="seg" id="segTime">
+              <button data-val="50">50s</button><button data-val="75" class="on">75s</button><button data-val="90">90s</button>
+            </div>
+          </div>
+          <div class="lf opt-wide"><span>Word category</span>
+            <select id="catSel" class="text-field"></select>
+          </div>
+        </div>
+
         <button class="btn btn-cta" id="startBtn">PLAY</button>
-        <div class="lobby-note">Playing locally vs. 3 friendly bots · no server needed</div>
+        <div class="lobby-note">Local match vs. 3 friendly bots · no server needed</div>
       </div>
+
+      <div class="modes-rail" id="modesRail"></div>
     </div>
   </section>
 
@@ -168,7 +186,10 @@
     <div class="results-inner">
       <h1 class="results-title">Game Over!</h1>
       <div class="podium" id="podium"></div>
-      <button class="btn btn-cta" id="againBtn">Play Again</button>
+      <div class="results-btns">
+        <button class="btn btn-cta" id="againBtn">Rematch</button>
+        <button class="btn btn-ghost" id="menuBtn">Menu</button>
+      </div>
     </div>
   </section>
 
@@ -183,6 +204,41 @@
 
   <div class="overlay" id="overlay-reveal" hidden>
     <div class="overlay-card panel" id="revealBody"></div>
+  </div>
+
+  <!-- ===================================================== MODAL: SETTINGS -->
+  <div class="modal" id="modal-settings" hidden>
+    <div class="modal-card panel">
+      <div class="modal-head"><span class="modal-title">Settings</span><button class="iconbtn sm" data-close>✕</button></div>
+      <div class="modal-body">
+        <div class="set-row"><span>Sound effects</span><button class="toggle" id="setSfx" role="switch" aria-checked="true"></button></div>
+        <div class="set-row"><span>Volume</span><input type="range" id="setVol" class="slider" min="0" max="100" value="60"></div>
+        <div class="set-row"><span>Animations</span><button class="toggle" id="setMotion" role="switch" aria-checked="true"></button></div>
+        <div class="set-row"><span>Language</span>
+          <select id="setLang" class="text-field sm">
+            <option value="en">English</option>
+            <option value="es">Español (soon)</option>
+            <option value="pt">Português (soon)</option>
+            <option value="fr">Français (soon)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-done" data-close>Done</button>
+    </div>
+  </div>
+
+  <!-- ===================================================== MODAL: HOW TO PLAY -->
+  <div class="modal" id="modal-howto" hidden>
+    <div class="modal-card panel">
+      <div class="modal-head"><span class="modal-title">How to Play</span><button class="iconbtn sm" data-close>✕</button></div>
+      <div class="howto-steps">
+        <div class="howto-step"><span class="hs-num">1</span><div><b>Get a word</b><p>On your turn, pick one of three secret words.</p></div></div>
+        <div class="howto-step"><span class="hs-num">2</span><div><b>Draw it</b><p>Use the brush, colors and tools — no letters or numbers!</p></div></div>
+        <div class="howto-step"><span class="hs-num">3</span><div><b>Others guess</b><p>Everyone else races to type the word in the chat.</p></div></div>
+        <div class="howto-step"><span class="hs-num">4</span><div><b>Score points</b><p>Guess fast for more points. The drawer scores too. Highest wins!</p></div></div>
+      </div>
+      <button class="btn btn-done" data-close>Got it!</button>
+    </div>
   </div>
 
 </main>

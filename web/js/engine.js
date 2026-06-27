@@ -36,6 +36,7 @@ export const DEFAULT_CONFIG = {
   revealTime:  5,    // seconds on the between-turn reveal
   hints:       2,    // letters auto-revealed as time runs out
   wordChoices: 3,    // words offered to the drawer
+  categories:  null, // null/[] = all categories, else restrict the word pool
 };
 
 // ---- scoring -------------------------------------------------------------
@@ -65,6 +66,9 @@ let _mid = 0;
 export function createEngine(config = {}) {
   const cfg = { ...DEFAULT_CONFIG, ...config };
   const listeners = new Set();
+  const wordPool = (cfg.categories && cfg.categories.length)
+    ? WORDS.filter(w => cfg.categories.includes(w.category))
+    : WORDS;
 
   const state = {
     phase: Phase.LOBBY,
@@ -109,7 +113,7 @@ export function createEngine(config = {}) {
     state.word = null;
     state.category = null;
     state.masked = [];
-    state.choices = sample(WORDS, cfg.wordChoices);
+    state.choices = sample(wordPool, cfg.wordChoices);
     state.correctCount = 0;
     state.hintsDone = 0;
     state.turnSummary = null;

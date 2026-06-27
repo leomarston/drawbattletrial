@@ -320,3 +320,94 @@ select.text-field{cursor:pointer;}
 /* spinner dots */
 .dots::after{content:'…'; animation:dots 1.2s steps(4,end) infinite; }
 @keyframes dots{0%{content:'';}25%{content:'.';}50%{content:'..';}75%{content:'...';}}
+
+/* ===================== HOME / MENU ===================== */
+.view-home{display:flex; align-items:center; justify-content:center; background:linear-gradient(180deg,#201a4a,#15112e);}
+.home-topbar{position:absolute; top:20px; right:22px; display:flex; gap:12px; z-index:5;}
+.iconbtn{
+  width:50px; height:50px; border:3px solid var(--ink); border-radius:15px; background:var(--panel-2);
+  box-shadow:0 5px 0 var(--panel-sh); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .06s, box-shadow .06s; padding:0;
+}
+.iconbtn svg{width:26px; height:26px;}
+.iconbtn:hover{transform:translateY(-2px); box-shadow:0 7px 0 var(--panel-sh);}
+.iconbtn:active{transform:translateY(3px); box-shadow:0 2px 0 var(--panel-sh);}
+.iconbtn.off{opacity:.55;}
+.iconbtn .iq{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:26px; color:#fff; line-height:1;}
+.iconbtn.sm{width:38px; height:38px; border-radius:12px; box-shadow:0 4px 0 var(--panel-sh); background:var(--coral); }
+.iconbtn.sm{color:#fff; font-weight:800; font-size:16px;}
+
+.home-main{display:flex; flex-direction:column; align-items:center; gap:22px;}
+.home-logo svg{height:120px; display:block;}
+.home-card{width:470px; padding:22px 24px; display:flex; flex-direction:column; gap:18px;}
+.home-profile{display:flex; align-items:center; gap:12px;}
+.home-av{flex:0 0 auto; width:48px; height:48px;}
+.home-av svg{width:48px; height:48px; display:block;}
+.name-field{flex:1; min-width:0;}
+
+.opt-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.opt-grid .opt-wide{grid-column:1 / -1;}
+
+/* segmented control */
+.seg{display:flex; gap:6px; background:var(--night); border:3px solid var(--ink); border-radius:14px; padding:5px;}
+.seg button{
+  flex:1; height:38px; border:none; border-radius:9px; background:transparent; cursor:pointer;
+  font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:16px; color:#A8A3D6;
+}
+.seg button.on{background:var(--teal); color:var(--ink); box-shadow:0 2px 0 var(--teal-sh);}
+
+/* modes rail */
+.modes-rail{display:flex; gap:14px;}
+.mode-card{
+  width:150px; padding:16px; background:var(--panel); border:3px solid var(--ink); border-radius:18px;
+  box-shadow:0 6px 0 var(--panel-sh); display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; cursor:pointer;
+  transition:transform .06s, box-shadow .06s;
+}
+.mode-card:hover{transform:translateY(-2px); box-shadow:0 8px 0 var(--panel-sh);}
+.mode-card.soon{opacity:.6; cursor:default;}
+.mode-card.soon:hover{transform:none; box-shadow:0 6px 0 var(--panel-sh);}
+.mode-card .mc-ico{width:46px; height:46px;}
+.mode-card .mc-name{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:17px;}
+.mode-card .mc-desc{font-size:11.5px; color:#A8A3D6; text-align:center; line-height:1.25; font-weight:700;}
+.mode-badge{position:absolute; top:-9px; right:-8px; font-family:'Nunito',system-ui,sans-serif; font-weight:800; font-size:10px; letter-spacing:1px; padding:3px 8px; border-radius:999px; border:2.5px solid var(--ink);}
+.mode-badge.live{background:var(--lime); color:var(--ink);}
+.mode-badge.soon{background:var(--amber); color:var(--ink);}
+
+.btn-ghost{height:50px; padding:0 26px; background:var(--panel-2); box-shadow:0 6px 0 var(--panel-sh); font-size:18px;}
+.btn-ghost:hover{box-shadow:0 9px 0 var(--panel-sh);}
+.btn-ghost:active{box-shadow:0 2px 0 var(--panel-sh);}
+.results-btns{display:flex; gap:14px; align-items:center;}
+
+/* ===================== MODALS ===================== */
+.modal{position:absolute; inset:0; z-index:40; display:flex; align-items:center; justify-content:center; background:rgba(12,10,30,.66); backdrop-filter:blur(2px);}
+.modal-card{width:440px; max-width:92%; padding:22px 24px; display:flex; flex-direction:column; gap:18px; box-shadow:0 10px 0 var(--panel-sh);}
+.modal-head{display:flex; align-items:center; justify-content:space-between;}
+.modal-title{font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; font-size:24px;}
+.modal-body{display:flex; flex-direction:column; gap:14px;}
+.set-row{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+.set-row>span{font-weight:800; font-size:15px;}
+.text-field.sm{height:40px; font-size:15px; min-width:150px;}
+.btn-done{height:52px; background:var(--teal); box-shadow:0 6px 0 var(--teal-sh); color:var(--ink); font-size:20px;}
+.btn-done:hover{box-shadow:0 9px 0 var(--teal-sh);}
+.btn-done:active{box-shadow:0 2px 0 var(--teal-sh);}
+
+/* toggle switch */
+.toggle{width:56px; height:32px; border:3px solid var(--ink); border-radius:999px; background:var(--night); position:relative; cursor:pointer; padding:0; transition:background .12s;}
+.toggle::after{content:''; position:absolute; top:2px; left:2px; width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid var(--ink); transition:left .12s;}
+.toggle.on{background:var(--lime);}
+.toggle.on::after{left:26px;}
+
+/* range slider */
+.slider{-webkit-appearance:none; appearance:none; width:180px; height:12px; border-radius:999px; background:var(--night); border:2.5px solid var(--ink); outline:none; cursor:pointer;}
+.slider::-webkit-slider-thumb{-webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--coral); border:2.5px solid var(--ink); cursor:pointer;}
+.slider::-moz-range-thumb{width:20px; height:20px; border-radius:50%; background:var(--coral); border:2.5px solid var(--ink); cursor:pointer;}
+
+/* how to play */
+.howto-steps{display:flex; flex-direction:column; gap:12px;}
+.howto-step{display:flex; gap:12px; align-items:flex-start; background:var(--night-2); border:2.5px solid var(--ink); border-radius:14px; padding:10px 12px;}
+.howto-step .hs-num{flex:0 0 auto; width:30px; height:30px; border-radius:9px; background:var(--coral); border:2.5px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:'Fredoka','Baloo 2',system-ui,sans-serif; font-weight:700; color:#fff;}
+.howto-step b{font-size:15px;}
+.howto-step p{margin:2px 0 0; font-size:13px; color:#C9C3F0; font-weight:600; line-height:1.3;}
+
+/* reduced motion */
+body.no-motion *{transition:none !important; animation:none !important;}
