@@ -1,0 +1,12 @@
+{
+  "name": "drawbattle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DrawBattle — draw-and-guess party game (UI preview, front-end only)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
