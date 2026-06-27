@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" width="760" height="470" font-family="Fredoka, 'Baloo 2', system-ui, sans-serif">
+  <defs>
+    <linearGradient id="topglow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="760" height="470" rx="24" fill="#181436"/>
+  <text x="32" y="48" fill="#A8A3D6" font-family="Nunito" font-weight="700" font-size="15" letter-spacing="3">BUTTON SYSTEM</text>
+
+  <!-- ============ PRIMARY STATES ============ -->
+  <text x="32" y="86" fill="#FFFFFF" font-weight="600" font-size="17">Primary · states</text>
+
+  <!-- default -->
+  <g transform="translate(32,100)">
+    <rect x="0" y="6" width="160" height="62" rx="16" fill="#C73E5C"/>
+    <rect x="0" y="0" width="160" height="62" rx="16" fill="#FB5E7E" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="6" width="144" height="26" rx="11" fill="url(#topglow)"/>
+    <text x="80" y="40" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="26">PLAY</text>
+  </g>
+  <!-- hover (lifts) -->
+  <g transform="translate(212,100)">
+    <rect x="0" y="9" width="160" height="62" rx="16" fill="#C73E5C"/>
+    <rect x="0" y="-3" width="160" height="62" rx="16" fill="#FF7491" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="3" width="144" height="26" rx="11" fill="url(#topglow)"/>
+    <text x="80" y="37" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="26">PLAY</text>
+    <text x="80" y="92" text-anchor="middle" fill="#7C77A8" font-family="Nunito" font-size="13">hover</text>
+  </g>
+  <!-- pressed (sinks) -->
+  <g transform="translate(392,100)">
+    <rect x="0" y="4" width="160" height="62" rx="16" fill="#C73E5C"/>
+    <rect x="0" y="4" width="160" height="62" rx="16" fill="#EC4E6E" stroke="#1E1B33" stroke-width="3"/>
+    <text x="80" y="44" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="26">PLAY</text>
+    <text x="80" y="92" text-anchor="middle" fill="#7C77A8" font-family="Nunito" font-size="13">pressed</text>
+  </g>
+  <!-- disabled -->
+  <g transform="translate(572,100)" opacity="0.55">
+    <rect x="0" y="6" width="160" height="62" rx="16" fill="#3A3568"/>
+    <rect x="0" y="0" width="160" height="62" rx="16" fill="#4A4575" stroke="#2A2550" stroke-width="3"/>
+    <text x="80" y="40" text-anchor="middle" fill="#9A95C4" font-weight="700" font-size="26">PLAY</text>
+    <text x="80" y="92" text-anchor="middle" fill="#7C77A8" font-family="Nunito" font-size="13">disabled</text>
+  </g>
+
+  <!-- ============ COLOR VARIANTS ============ -->
+  <text x="32" y="232" fill="#FFFFFF" font-weight="600" font-size="17">Variants</text>
+
+  <g transform="translate(32,246)">
+    <rect x="0" y="6" width="160" height="60" rx="16" fill="#1E9C8E"/>
+    <rect x="0" y="0" width="160" height="60" rx="16" fill="#2DD4BF" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="6" width="144" height="24" rx="10" fill="url(#topglow)"/>
+    <text x="80" y="39" text-anchor="middle" fill="#1E1B33" font-weight="700" font-size="23">CREATE</text>
+  </g>
+  <g transform="translate(212,246)">
+    <rect x="0" y="6" width="160" height="60" rx="16" fill="#6D3FCB"/>
+    <rect x="0" y="0" width="160" height="60" rx="16" fill="#8B5CF6" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="6" width="144" height="24" rx="10" fill="url(#topglow)"/>
+    <text x="80" y="39" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="23">JOIN</text>
+  </g>
+  <g transform="translate(392,246)">
+    <rect x="0" y="6" width="160" height="60" rx="16" fill="#D98A1E"/>
+    <rect x="0" y="0" width="160" height="60" rx="16" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="6" width="144" height="24" rx="10" fill="url(#topglow)"/>
+    <text x="80" y="39" text-anchor="middle" fill="#1E1B33" font-weight="700" font-size="23">INVITE</text>
+  </g>
+  <g transform="translate(572,246)">
+    <rect x="0" y="6" width="160" height="60" rx="16" fill="#79A81E"/>
+    <rect x="0" y="0" width="160" height="60" rx="16" fill="#A3E635" stroke="#1E1B33" stroke-width="3"/>
+    <rect x="8" y="6" width="144" height="24" rx="10" fill="url(#topglow)"/>
+    <text x="80" y="39" text-anchor="middle" fill="#1E1B33" font-weight="700" font-size="23">READY</text>
+  </g>
+
+  <!-- ============ PILLS + ICON BUTTONS ============ -->
+  <text x="32" y="362" fill="#FFFFFF" font-weight="600" font-size="17">Pills &amp; icon buttons</text>
+
+  <!-- pill ghost -->
+  <g transform="translate(32,378)">
+    <rect x="0" y="5" width="150" height="52" rx="26" fill="#15112E"/>
+    <rect x="0" y="0" width="150" height="52" rx="26" fill="#2E2566" stroke="#1E1B33" stroke-width="3"/>
+    <text x="75" y="33" text-anchor="middle" fill="#FFFFFF" font-family="Nunito" font-weight="700" font-size="18">Settings</text>
+  </g>
+
+  <!-- icon button: sound -->
+  <g transform="translate(204,378)">
+    <rect x="0" y="5" width="52" height="52" rx="16" fill="#1E9C8E"/>
+    <rect x="0" y="0" width="52" height="52" rx="16" fill="#2DD4BF" stroke="#1E1B33" stroke-width="3"/>
+    <path d="M18 19 L24 19 L31 13 L31 39 L24 33 L18 33 Z" fill="#1E1B33"/>
+    <path d="M35 20 Q40 26 35 32 M38 16 Q46 26 38 36" fill="none" stroke="#1E1B33" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- icon button: close -->
+  <g transform="translate(268,378)">
+    <rect x="0" y="5" width="52" height="52" rx="16" fill="#C73E5C"/>
+    <rect x="0" y="0" width="52" height="52" rx="16" fill="#FB5E7E" stroke="#1E1B33" stroke-width="3"/>
+    <path d="M18 18 L34 34 M34 18 L18 34" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <!-- icon button: help -->
+  <g transform="translate(332,378)">
+    <rect x="0" y="5" width="52" height="52" rx="16" fill="#6D3FCB"/>
+    <rect x="0" y="0" width="52" height="52" rx="16" fill="#8B5CF6" stroke="#1E1B33" stroke-width="3"/>
+    <text x="26" y="38" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="30">?</text>
+  </g>
+  <!-- icon button: like/heart -->
+  <g transform="translate(396,378)">
+    <rect x="0" y="5" width="52" height="52" rx="16" fill="#D98A1E"/>
+    <rect x="0" y="0" width="52" height="52" rx="16" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
+    <path d="M26 36 C12 27 16 16 26 21 C36 16 40 27 26 36 Z" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- small CTA pill -->
+  <g transform="translate(596,378)">
+    <rect x="0" y="5" width="132" height="52" rx="26" fill="#C73E5C"/>
+    <rect x="0" y="0" width="132" height="52" rx="26" fill="#FB5E7E" stroke="#1E1B33" stroke-width="3"/>
+    <path d="M22 26 L34 26 M28 20 L34 26 L28 32" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="78" y="33" text-anchor="middle" fill="#FFFFFF" font-family="Nunito" font-weight="700" font-size="17">Start</text>
+  </g>
+</svg>

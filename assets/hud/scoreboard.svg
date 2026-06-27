@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 360" width="300" height="360" font-family="Nunito, system-ui, sans-serif">
+  <!-- panel -->
+  <rect x="6" y="12" width="288" height="342" rx="20" fill="#15112E"/>
+  <rect x="6" y="6" width="288" height="342" rx="20" fill="#2E2566" stroke="#1E1B33" stroke-width="3"/>
+
+  <!-- header -->
+  <rect x="6" y="6" width="288" height="44" rx="20" fill="#3B2E84"/>
+  <rect x="6" y="30" width="288" height="20" fill="#3B2E84"/>
+  <text x="24" y="35" fill="#FFFFFF" font-weight="800" font-size="16">Players</text>
+  <text x="276" y="35" text-anchor="end" fill="#A8A3D6" font-weight="700" font-size="14">4 / 8</text>
+
+  <!-- ROW template helper colors per player -->
+  <!-- Row 1: leader (crown) -->
+  <g transform="translate(18,60)">
+    <rect x="0" y="0" width="264" height="56" rx="14" fill="#3B2E84" stroke="#1E1B33" stroke-width="2.5"/>
+    <text x="20" y="34" text-anchor="middle" fill="#FFD45E" font-weight="800" font-size="16">1</text>
+    <!-- avatar: teal blob -->
+    <g transform="translate(38,8)">
+      <rect x="0" y="0" width="40" height="40" rx="13" fill="#2DD4BF" stroke="#1E1B33" stroke-width="2.5"/>
+      <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
+      <path d="M13 27 q7 7 14 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- crown -->
+      <path d="M5 -2 L11 4 L20 -8 L29 4 L35 -2 L33 8 L7 8 Z" fill="#FFD45E" stroke="#1E1B33" stroke-width="2" stroke-linejoin="round" transform="translate(0,-4)"/>
+    </g>
+    <text x="90" y="26" fill="#FFFFFF" font-weight="700" font-size="15">Maya</text>
+    <text x="90" y="44" fill="#A3E635" font-weight="700" font-size="12">+120 ✓ guessed</text>
+    <text x="252" y="36" text-anchor="end" fill="#FFFFFF" font-weight="800" font-size="17">2450</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(18,124)">
+    <rect x="0" y="0" width="264" height="56" rx="14" fill="#241C53" stroke="#1E1B33" stroke-width="2.5"/>
+    <text x="20" y="34" text-anchor="middle" fill="#A8A3D6" font-weight="800" font-size="16">2</text>
+    <g transform="translate(38,8)">
+      <rect x="0" y="0" width="40" height="40" rx="13" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2.5"/>
+      <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
+      <path d="M13 26 q7 5 14 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <text x="90" y="26" fill="#FFFFFF" font-weight="700" font-size="15">Leo</text>
+    <text x="90" y="44" fill="#A3E635" font-weight="700" font-size="12">+90 ✓ guessed</text>
+    <text x="252" y="36" text-anchor="end" fill="#FFFFFF" font-weight="800" font-size="17">2110</text>
+  </g>
+
+  <!-- Row 3: currently drawing (pencil badge) -->
+  <g transform="translate(18,188)">
+    <rect x="0" y="0" width="264" height="56" rx="14" fill="#241C53" stroke="#FFB23E" stroke-width="2.5"/>
+    <text x="20" y="34" text-anchor="middle" fill="#A8A3D6" font-weight="800" font-size="16">3</text>
+    <g transform="translate(38,8)">
+      <rect x="0" y="0" width="40" height="40" rx="13" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/>
+      <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
+      <path d="M14 28 q6 -4 12 0" fill="none" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- drawing pencil badge -->
+      <g transform="translate(30,30)">
+        <circle cx="0" cy="0" r="10" fill="#FFB23E" stroke="#1E1B33" stroke-width="2"/>
+        <g transform="rotate(45)"><rect x="-2" y="-6" width="4" height="9" fill="#FFFFFF" stroke="#1E1B33" stroke-width="1.5"/><path d="M-2 3 L2 3 L0 6 Z" fill="#1E1B33"/></g>
+      </g>
+    </g>
+    <text x="90" y="26" fill="#FFFFFF" font-weight="700" font-size="15">Aria</text>
+    <text x="90" y="44" fill="#FFB23E" font-weight="700" font-size="12">drawing…</text>
+    <text x="252" y="36" text-anchor="end" fill="#FFFFFF" font-weight="800" font-size="17">1980</text>
+  </g>
+
+  <!-- Row 4: still guessing -->
+  <g transform="translate(18,252)">
+    <rect x="0" y="0" width="264" height="56" rx="14" fill="#241C53" stroke="#1E1B33" stroke-width="2.5"/>
+    <text x="20" y="34" text-anchor="middle" fill="#A8A3D6" font-weight="800" font-size="16">4</text>
+    <g transform="translate(38,8)">
+      <rect x="0" y="0" width="40" height="40" rx="13" fill="#FFB23E" stroke="#1E1B33" stroke-width="2.5"/>
+      <circle cx="14" cy="18" r="3.5" fill="#1E1B33"/><circle cx="27" cy="18" r="3.5" fill="#1E1B33"/>
+      <path d="M14 27 h12" stroke="#1E1B33" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <text x="90" y="26" fill="#FFFFFF" font-weight="700" font-size="15">Sam</text>
+    <text x="90" y="44" fill="#7C77A8" font-weight="700" font-size="12">guessing…</text>
+    <text x="252" y="36" text-anchor="end" fill="#FFFFFF" font-weight="800" font-size="17">1600</text>
+  </g>
+</svg>

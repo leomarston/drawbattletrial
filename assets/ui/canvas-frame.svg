@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" font-family="Nunito, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F4F2FB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer frame (sticker) -->
+  <rect x="10" y="16" width="540" height="376" rx="26" fill="#15112E"/>
+  <rect x="10" y="8" width="540" height="376" rx="26" fill="#3B2E84" stroke="#1E1B33" stroke-width="3.5"/>
+
+  <!-- top tab: "you are drawing" ribbon -->
+  <g transform="translate(180,0)">
+    <rect x="0" y="0" width="200" height="34" rx="0 0 16 16" fill="#2DD4BF"/>
+    <rect x="0" y="-10" width="200" height="34" rx="14" fill="#2DD4BF" stroke="#1E1B33" stroke-width="3"/>
+    <circle cx="26" cy="7" r="7" fill="#FFFFFF" stroke="#1E1B33" stroke-width="2.5"/>
+    <path d="M22 7 l3 3 l6 -7" fill="none" stroke="#1E9C8E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="112" y="12" text-anchor="middle" fill="#0E3D38" font-weight="800" font-size="14" letter-spacing="1">YOUR TURN</text>
+  </g>
+
+  <!-- paper -->
+  <rect x="30" y="44" width="500" height="320" rx="16" fill="url(#paper)" stroke="#1E1B33" stroke-width="2.5"/>
+
+  <!-- faint demo doodle so the board reads as a canvas (a house + sun) -->
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <circle cx="430" cy="110" r="26" fill="#FFE08A" stroke="#FFB23E" stroke-width="4"/>
+    <g stroke="#FFB23E" stroke-width="4">
+      <line x1="430" y1="70" x2="430" y2="58"/>
+      <line x1="465" y1="110" x2="478" y2="110"/>
+      <line x1="456" y1="84" x2="466" y2="74"/>
+    </g>
+    <path d="M150 280 L150 200 L210 158 L270 200 L270 280 Z" fill="#BDEFE8" stroke="#2DD4BF" stroke-width="5"/>
+    <path d="M138 206 L210 152 L282 206" stroke="#FB5E7E" stroke-width="6"/>
+    <rect x="186" y="232" width="34" height="48" rx="4" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="5"/>
+    <path d="M90 300 Q300 286 470 300" stroke="#A3E635" stroke-width="6"/>
+  </g>
+
+  <!-- corner accent rivets -->
+  <circle cx="44" cy="58" r="4" fill="#FFB23E" stroke="#1E1B33" stroke-width="2"/>
+  <circle cx="516" cy="58" r="4" fill="#FB5E7E" stroke="#1E1B33" stroke-width="2"/>
+  <circle cx="44" cy="350" r="4" fill="#A3E635" stroke="#1E1B33" stroke-width="2"/>
+  <circle cx="516" cy="350" r="4" fill="#38BDF8" stroke="#1E1B33" stroke-width="2"/>
+</svg>

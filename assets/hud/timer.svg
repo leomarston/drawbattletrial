@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 150" width="140" height="150" font-family="Fredoka, system-ui, sans-serif">
+  <!-- base shadow -->
+  <circle cx="70" cy="76" r="56" fill="#15112E"/>
+  <!-- ring track -->
+  <circle cx="70" cy="70" r="56" fill="#2E2566" stroke="#1E1B33" stroke-width="3.5"/>
+  <circle cx="70" cy="70" r="44" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/>
+
+  <!-- progress arc: ~70% remaining, starts at top, sweeps clockwise -->
+  <!-- circumference for r=50 ~ 314; show ~70% -->
+  <circle cx="70" cy="70" r="50" fill="none" stroke="#2DD4BF" stroke-width="9"
+          stroke-linecap="round" stroke-dasharray="220 314"
+          transform="rotate(-90 70 70)"/>
+
+  <!-- seconds -->
+  <text x="70" y="80" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="40">42</text>
+  <text x="70" y="98" text-anchor="middle" fill="#A8A3D6" font-family="Nunito" font-weight="700" font-size="11" letter-spacing="2">SECONDS</text>
+
+  <!-- little clock cap -->
+  <g transform="translate(70,14)">
+    <rect x="-15" y="0" width="30" height="14" rx="7" fill="#FFB23E" stroke="#1E1B33" stroke-width="3"/>
+    <circle cx="0" cy="7" r="3" fill="#1E1B33"/>
+  </g>
+</svg>

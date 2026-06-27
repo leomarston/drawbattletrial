@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>DrawBattle — Asset Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#181436; --night-2:#241C53; --panel:#2E2566; --panel-2:#3B2E84;
+    --teal:#2DD4BF; --violet:#8B5CF6; --coral:#FB5E7E; --amber:#FFB23E; --lime:#A3E635;
+    --ink:#1E1B33; --slate:#6B6790; --cloud:#F4F2FB;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, #2a2168 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, #2b1f5e 0%, transparent 55%),
+      var(--night);
+    color:#fff; font-family:'Nunito',system-ui,sans-serif; padding:40px;
+  }
+  h1{font-family:'Fredoka';font-weight:700;font-size:34px;margin:0 0 4px;}
+  h2{font-family:'Fredoka';font-weight:600;font-size:20px;color:#C9C3F0;margin:48px 0 16px;
+     border-left:5px solid var(--teal);padding-left:12px;}
+  .sub{color:#A8A3D6;margin:0 0 8px;}
+  .note{background:#241C53;border:2px solid #3B2E84;border-radius:14px;padding:14px 18px;color:#C9C3F0;max-width:760px;margin-top:14px;font-size:14px;}
+  .gallery{display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start;}
+  .item{background:rgba(255,255,255,.03);border:2px solid #2e2566;border-radius:18px;padding:16px;}
+  .item span{display:block;color:#8F8AC0;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .item img{display:block;}
+
+  /* ===== composed game screen ===== */
+  .screen{
+    position:relative; width:1180px; max-width:100%; aspect-ratio:1180/720;
+    background:linear-gradient(180deg,#201a4a,#15112e);
+    border:3px solid var(--ink); border-radius:28px; overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.5); margin-top:8px;
+  }
+  .screen .topbar{position:absolute;top:22px;left:24px;right:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .screen .logo{height:54px;}
+  .screen .word{height:74px;}
+  .screen .timer{height:104px;}
+  .screen .left{position:absolute;left:24px;top:110px;width:262px;}
+  .screen .left img{width:100%;}
+  .screen .right{position:absolute;right:24px;top:110px;width:262px;}
+  .screen .right img{width:100%;}
+  .screen .canvas{position:absolute;left:300px;right:300px;top:104px;}
+  .screen .canvas img{width:100%;}
+  .screen .dock{position:absolute;left:300px;right:300px;bottom:20px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .screen .dock .tb{width:560px;max-width:100%;}
+  .screen .dock .cp{width:330px;max-width:100%;}
+  footer{margin-top:56px;color:#6B6790;font-size:13px;}
+  code{background:#241C53;padding:2px 7px;border-radius:6px;color:#C9C3F0;}
+</style>
+</head>
+<body>
+  <img src="brand/logo.svg" alt="DrawBattle logo" style="height:120px"/>
+  <h1>DrawBattle — Original Asset Kit</h1>
+  <p class="sub">Genre-true party-game energy, 100% original execution. Every asset below is a real, editable SVG you can recolor and export to PNG at any size.</p>
+  <div class="note">
+    <b>Note on identity:</b> this is an original style built for the draw-and-guess genre — its own palette,
+    logo and component language — not a copy of any competitor's specific look. Swap the tokens in
+    <code>brand/style-guide.md</code> to re-skin everything at once.
+  </div>
+
+  <h2>Brand</h2>
+  <div class="gallery">
+    <div class="item"><span>logo.svg</span><img src="brand/logo.svg" height="120"/></div>
+  </div>
+
+  <h2>Core game UI</h2>
+  <div class="gallery">
+    <div class="item"><span>buttons.svg</span><img src="ui/buttons.svg" width="540"/></div>
+    <div class="item"><span>toolbar.svg</span><img src="ui/toolbar.svg" width="540"/></div>
+    <div class="item"><span>color-picker.svg</span><img src="ui/color-picker.svg" width="330"/></div>
+    <div class="item"><span>canvas-frame.svg</span><img src="ui/canvas-frame.svg" width="420"/></div>
+  </div>
+
+  <h2>Game screens &amp; HUD</h2>
+  <div class="gallery">
+    <div class="item"><span>timer.svg</span><img src="hud/timer.svg" height="150"/></div>
+    <div class="item"><span>word-banner.svg</span><img src="hud/word-banner.svg" width="500"/></div>
+    <div class="item"><span>scoreboard.svg</span><img src="hud/scoreboard.svg" width="270"/></div>
+    <div class="item"><span>guess-box.svg</span><img src="hud/guess-box.svg" width="270"/></div>
+    <div class="item"><span>results.svg</span><img src="hud/results.svg" width="500"/></div>
+  </div>
+
+  <h2>Everything together — full gameplay screen</h2>
+  <p class="sub">The same assets composed into a real in-game layout.</p>
+  <div class="screen">
+    <div class="topbar">
+      <img class="logo" src="brand/logo.svg"/>
+      <img class="word" src="hud/word-banner.svg"/>
+      <img class="timer" src="hud/timer.svg"/>
+    </div>
+    <div class="left"><img src="hud/scoreboard.svg"/></div>
+    <div class="canvas"><img src="ui/canvas-frame.svg"/></div>
+    <div class="right"><img src="hud/guess-box.svg"/></div>
+    <div class="dock">
+      <img class="tb" src="ui/toolbar.svg"/>
+      <img class="cp" src="ui/color-picker.svg"/>
+    </div>
+  </div>
+
+  <footer>DrawBattle asset kit · open this file in any browser · see <code>assets/README.md</code> to export PNGs.</footer>
+</body>
+</html>

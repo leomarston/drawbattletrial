@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 110" width="560" height="110" font-family="Fredoka, system-ui, sans-serif">
+  <!-- banner -->
+  <rect x="8" y="14" width="544" height="80" rx="20" fill="#15112E"/>
+  <rect x="8" y="8" width="544" height="80" rx="20" fill="#2E2566" stroke="#1E1B33" stroke-width="3"/>
+
+  <!-- category chip -->
+  <g transform="translate(24,26)">
+    <rect x="0" y="0" width="118" height="44" rx="13" fill="#8B5CF6" stroke="#1E1B33" stroke-width="2.5"/>
+    <text x="59" y="20" text-anchor="middle" fill="#FFFFFF" font-family="Nunito" font-weight="800" font-size="11" letter-spacing="1">CATEGORY</text>
+    <text x="59" y="36" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="16">Animals</text>
+  </g>
+
+  <!-- letter blanks: E L _ P _ A N T  (elephant, 2 letters revealed) -->
+  <g transform="translate(168,30)" font-weight="700" font-size="26">
+    <!-- helper to draw a slot: rect + underline -->
+    <g>
+      <rect x="0"   y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/>
+      <text x="17"  y="29" text-anchor="middle" fill="#2DD4BF">E</text>
+    </g>
+    <g transform="translate(40,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <g transform="translate(80,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <g transform="translate(120,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><text x="17" y="29" text-anchor="middle" fill="#2DD4BF">P</text></g>
+    <g transform="translate(160,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <g transform="translate(200,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <g transform="translate(240,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <g transform="translate(280,0)"><rect x="0" y="0" width="34" height="40" rx="9" fill="#181436" stroke="#1E1B33" stroke-width="2.5"/><line x1="8" y1="32" x2="26" y2="32" stroke="#7C77A8" stroke-width="3" stroke-linecap="round"/></g>
+    <!-- count -->
+    <text x="157" y="62" text-anchor="middle" fill="#A8A3D6" font-family="Nunito" font-weight="700" font-size="12">8 letters</text>
+  </g>
+</svg>
