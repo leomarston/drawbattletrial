@@ -1,0 +1,226 @@
+/* ============================================================
+   DrawBattle — front-end design (no backend)
+   Pixel-matched to assets/preview.html composed game screen.
+   ============================================================ */
+
+:root{
+  --night:#181436; --night-2:#241C53; --panel:#2E2566; --panel-2:#3B2E84;
+  --teal:#2DD4BF;  --teal-sh:#1E9C8E;
+  --violet:#8B5CF6; --violet-sh:#6D3FCB;
+  --coral:#FB5E7E; --coral-sh:#C73E5C;
+  --amber:#FFB23E; --amber-sh:#D98A1E;
+  --lime:#A3E635;  --lime-sh:#79A81E;
+  --sky:#38BDF8;
+  --ink:#1E1B33; --slate:#6B6790; --cloud:#F4F2FB; --white:#fff;
+  --panel-sh:#15112E;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  background:#11102a;
+  font-family:'Nunito',system-ui,sans-serif;
+  color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  min-height:100vh; padding:24px;
+}
+
+/* ---------- the game stage (1:1 with the design image) ---------- */
+.stage{
+  position:relative;
+  width:1180px; height:720px;
+  background:linear-gradient(180deg,#201a4a,#15112e);
+  border:3px solid var(--ink);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);
+  flex:0 0 auto;
+}
+
+/* ---------- reusable sticker primitives ---------- */
+.panel{
+  background:var(--panel);
+  border:3px solid var(--ink);
+  border-radius:20px;
+  box-shadow:0 6px 0 var(--panel-sh);
+}
+.btn{
+  position:relative;
+  border:3px solid var(--ink);
+  border-radius:16px;
+  box-shadow:0 6px 0 var(--ink);
+  font-family:'Fredoka',sans-serif; font-weight:700;
+  color:#fff; cursor:pointer; user-select:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  transition:transform .06s ease, box-shadow .06s ease;
+}
+.btn::before{
+  content:""; position:absolute; left:8px; right:8px; top:5px; height:38%;
+  border-radius:11px;
+  background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0));
+  pointer-events:none;
+}
+.btn:hover{transform:translateY(-3px); box-shadow:0 9px 0 var(--ink);}
+.btn:active{transform:translateY(4px); box-shadow:0 2px 0 var(--ink);}
+
+/* ===================== TOP BAR ===================== */
+.topbar{
+  position:absolute; top:22px; left:24px; right:24px; height:104px;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.logo svg{height:54px; display:block;}
+.timer svg{height:104px; display:block;}
+
+.wordbanner{
+  height:74px; display:flex; align-items:center; gap:16px;
+  padding:0 18px;
+}
+.chip-cat{
+  background:var(--violet); border:2.5px solid var(--ink); border-radius:13px;
+  padding:6px 16px; text-align:center; line-height:1.05;
+}
+.chip-cat .k{font-family:'Nunito'; font-weight:800; font-size:11px; letter-spacing:1px;}
+.chip-cat .v{font-family:'Fredoka'; font-weight:700; font-size:16px;}
+.blanks{display:flex; align-items:flex-end; gap:6px; position:relative; padding-bottom:14px;}
+.slot{
+  width:34px; height:40px; border:2.5px solid var(--ink); border-radius:9px;
+  background:var(--night); display:flex; align-items:center; justify-content:center;
+  font-family:'Fredoka'; font-weight:700; font-size:26px; color:var(--teal);
+}
+.slot.empty{position:relative;}
+.slot.empty::after{
+  content:""; position:absolute; left:8px; right:8px; bottom:8px; height:3px;
+  border-radius:3px; background:var(--slate);
+}
+.blanks .count{
+  position:absolute; bottom:-2px; left:50%; transform:translateX(-50%);
+  font-family:'Nunito'; font-weight:700; font-size:12px; color:#A8A3D6; white-space:nowrap;
+}
+
+/* ===================== SCOREBOARD ===================== */
+.scoreboard{
+  position:absolute; left:24px; top:110px; width:262px; padding-bottom:12px;
+  overflow:hidden;
+}
+.sb-head{
+  background:var(--panel-2); padding:11px 18px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.sb-head .t{font-family:'Fredoka'; font-weight:800; font-size:16px;}
+.sb-head .c{font-weight:700; font-size:14px; color:#A8A3D6;}
+.prow{
+  display:flex; align-items:center; gap:10px;
+  margin:10px 12px 0; padding:8px 10px;
+  background:var(--night-2); border:2.5px solid var(--ink); border-radius:14px;
+}
+.prow.leader{background:var(--panel-2);}
+.prow.drawing{border-color:var(--amber);}
+.prow .rank{font-family:'Fredoka'; font-weight:800; font-size:16px; color:#A8A3D6; width:14px; text-align:center;}
+.prow.leader .rank{color:#FFD45E;}
+.av{position:relative; width:40px; height:40px; flex:0 0 auto;}
+.av svg{display:block;}
+.prow .who{flex:1; min-width:0;}
+.prow .name{font-weight:700; font-size:15px; line-height:1.1; white-space:nowrap;}
+.prow .sub{font-weight:700; font-size:11.5px; line-height:1.2; white-space:nowrap;}
+.sub.ok{color:var(--lime);} .sub.draw{color:var(--amber);} .sub.wait{color:#7C77A8;}
+.prow .score{font-family:'Fredoka'; font-weight:800; font-size:17px;}
+
+/* ===================== CANVAS ===================== */
+.canvas{
+  position:absolute; left:300px; right:300px; top:104px; height:414px;
+  background:var(--panel-2); border:3.5px solid var(--ink); border-radius:26px;
+  box-shadow:0 6px 0 var(--panel-sh);
+}
+.turn-ribbon{
+  position:absolute; top:-12px; left:50%; transform:translateX(-50%);
+  background:var(--teal); border:3px solid var(--ink); border-radius:14px;
+  padding:7px 22px; display:flex; align-items:center; gap:9px;
+  color:#0E3D38; font-family:'Fredoka'; font-weight:800; font-size:15px; letter-spacing:1px;
+}
+.turn-ribbon .tick{
+  width:15px; height:15px; border-radius:50%; background:#fff; border:2.5px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+}
+.paper{
+  position:absolute; left:20px; right:20px; top:36px; bottom:18px;
+  background:linear-gradient(180deg,#fff,#F4F2FB);
+  border:2.5px solid var(--ink); border-radius:16px; overflow:hidden;
+}
+.paper svg{width:100%; height:100%; display:block;}
+.rivet{position:absolute; width:8px; height:8px; border-radius:50%; border:2px solid var(--ink);}
+.rivet.tl{left:14px; top:50px;} .rivet.tr{right:14px; top:50px;}
+.rivet.bl{left:14px; bottom:42px;} .rivet.br{right:14px; bottom:42px;}
+
+/* ===================== GUESS BOX ===================== */
+.guessbox{
+  position:absolute; right:24px; top:110px; width:262px;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.gb-head{background:var(--panel-2); padding:11px 18px;}
+.gb-head .t{font-family:'Fredoka'; font-weight:800; font-size:16px;}
+.gb-feed{flex:1; padding:12px 14px; display:flex; flex-direction:column; gap:9px;}
+.msg{font-size:14px; line-height:1.2;}
+.msg .nm{font-weight:800; margin-right:6px;}
+.msg .nm.leo{color:#FF9FB3;} .msg .nm.sam{color:#8FD0FF;} .msg .nm.aria{color:#C9B6FF;}
+.msg .gx{color:#E7E5F5; font-weight:600;}
+.sys{
+  text-align:center; font-style:italic; font-weight:700; font-size:13px;
+}
+.sys.close{background:#3a2f10; color:var(--amber); border-radius:9px; padding:5px 0;}
+.sys.join{color:#7C77A8; font-weight:600;}
+.correct{
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
+  background:#2c4d12; border:2px solid var(--lime); border-radius:11px; padding:7px 9px;
+  color:#BEF264; font-weight:800; font-size:13px;
+}
+.correct .tick{
+  width:18px; height:18px; flex:0 0 auto; border-radius:50%;
+  background:var(--lime); border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+}
+.gb-input{display:flex; gap:8px; padding:0 14px 16px;}
+.gb-input .field{
+  flex:1; min-width:0; background:#fff; border:3px solid var(--ink); border-radius:14px;
+  height:46px; display:flex; align-items:center; padding:0 14px;
+  color:#9A95C4; font-weight:600; font-size:13.5px; white-space:nowrap; overflow:hidden;
+}
+.send{width:46px; height:46px; flex:0 0 auto;}
+
+/* ===================== DOCK (toolbar + colors) ===================== */
+.dock{
+  position:absolute; left:300px; right:300px; bottom:20px;
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.toolbar{
+  width:560px; height:90px; display:flex; align-items:center; gap:10px;
+  padding:0 16px;
+}
+.tool{
+  width:54px; height:54px; flex:0 0 auto; position:relative;
+  background:var(--panel-2); border:3px solid var(--ink); border-radius:15px;
+  box-shadow:0 4px 0 var(--panel-sh);
+  cursor:pointer; transition:transform .06s,box-shadow .06s;
+}
+.tool:hover{transform:translateY(-2px); box-shadow:0 6px 0 var(--panel-sh);}
+.tool:active{transform:translateY(3px); box-shadow:0 1px 0 var(--panel-sh);}
+.tool.active{background:var(--teal); box-shadow:0 4px 0 var(--teal-sh);}
+.tool.danger{background:var(--coral); box-shadow:0 4px 0 var(--coral-sh);}
+.tool svg{position:absolute; inset:0; width:100%; height:100%;}
+.tdiv{width:2px; height:50px; background:var(--ink); opacity:.4; border-radius:2px; margin:0 4px;}
+
+.colorpicker{
+  width:330px; height:184px; display:flex; gap:14px; padding:18px 20px;
+}
+.cp-side{
+  width:78px; background:var(--night); border:2.5px solid var(--ink); border-radius:14px;
+  display:flex; flex-direction:column; align-items:center; padding:8px 0; gap:4px;
+}
+.cp-side .lbl{font-weight:800; font-size:11px; letter-spacing:1px; color:#A8A3D6;}
+.cur{width:50px; height:44px; border-radius:11px; border:3px solid var(--ink); background:var(--coral);}
+.sizes{display:flex; align-items:center; gap:7px; margin-top:2px;}
+.sizes i{display:block; border-radius:50%; background:#fff; border:2px solid var(--ink);}
+.sizes .s1{width:6px; height:6px;} .sizes .s2{width:10px; height:10px;}
+.sizes .s3{width:15px; height:15px; background:var(--coral); border-width:2.5px;}
+.grid{flex:1; display:grid; grid-template-columns:repeat(8,1fr); grid-auto-rows:26px; gap:3px; align-content:center;}
+.sw{border:2.5px solid var(--ink); border-radius:7px; position:relative;}
+.sw.sel{outline:3px solid #fff; outline-offset:1px; z-index:1;}
